@@ -31,7 +31,7 @@ export default function DancePage() {
 
   return (
     // LIME GREEN BACKGROUND: bg-lime-500 at 25% opacity
-    <main className="min-h-screen bg-green-300/30 py-20 relative">
+    <main className="min-h-screen bg-green-300/30 pt-36 pb-20 relative">
       
       {/* WATERMARK: Odissi dancer at 50% opacity, fixed behind content */}
       <div className="fixed inset-0 flex items-center justify-center -z-10 opacity-10 pointer-events-none">
