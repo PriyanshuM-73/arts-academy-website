@@ -33,7 +33,7 @@ export default function FineArtsPage() {
 
   return (
     // CYAN BACKGROUND: bg-cyan-500 at 50% opacity
-    <main className="min-h-screen bg-cyan-500/50 py-20 relative">
+    <main className="min-h-screen bg-cyan-500/50 pt-36 pb-20 relative">
       
       {/* WATERMARK: Brushes/Paint at 50% opacity, fixed behind content */}
       <div className="fixed inset-0 flex items-center justify-center -z-10 opacity-50 pointer-events-none">
