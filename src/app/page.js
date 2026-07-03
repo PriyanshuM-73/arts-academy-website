@@ -244,9 +244,14 @@ export default function Home() {
       )}
       
       {/* 1. HERO SECTION */}
-      {/* --- HERO SECTION WITH NEXT.JS IMAGE OPTIMIZATION --- */}
-      <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+      {/* THE HERO SECTION WRAPPER */}
         
+        {/* THE FIX: Changed md:min-h-screen to md:min-h-[70vh] */}
+      {/* This makes the box shorter on laptops, which stops the browser from zooming in so hard! */}
+      {/* THE HERO SECTION WRAPPER */}
+      <div className="relative w-full min-h-[60vh] md:min-h-screen flex items-center justify-center bg-gray-900">
+        
+        {/* 1. The Background Photo */}
         <Image 
           src="/home_bg.JPG" 
           alt="Sri Siddhi Academy Stage"
@@ -254,28 +259,24 @@ export default function Home() {
           priority 
           fetchPriority="high" 
           quality={75} 
-          // THE FIX: Centers the focal point on mobile to stop the weird cropping
-          className="object-cover object-top md:object-center z-0" 
+          className="object-cover object-center z-0" 
         />
-        
-        {/* 2. THE TRANSLUCENT ORANGE-GOLD-SAFFRON TINT */}
-        <div className="absolute inset-0 bg-[#FDBB08] opacity-30 pointer-events-none z-10"></div>
 
-        {/* 3. YOUR CONTENT */}
-        <div className="relative z-20 flex flex-col items-center justify-center p-4 text-center">
+        {/* 2. THE OG ORANGE/GOLD OVERLAY */}
+        {/* We use a rich gradient from orange to amber with a 60% opacity so it glows but text remains readable */}
+        <div className="absolute inset-0 bg-linear-to-br from-orange-700/40 to-amber-500/40 z-1"></div>
+
+        {/* 3. Your Website Text */}
+        <div className="relative z-10 flex flex-col items-center text-center px-4 w-full mt-10 md:mt-0">
           
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-2xl mb-6 tracking-tight">
-            Sri Siddhi Academy of Art
-          </h1>
-          <p className="text-xl md:text-2xl text-white font-medium drop-shadow-lg max-w-2xl mb-10">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-blue-100 drop-shadow-[0_0_20px_rgba(29,78,216,1)] z-10 relative">
+  Sri Siddhi Academy of Art
+</h1>          
+          <p className="text-base md:text-xl text-gray-100 mb-8 max-w-2xl drop-shadow-md">
             Nurturing talent across Music, Dance, Tabla, and Fine Arts.
-          </p>
-          
-          <Link href="/contacts" className="bg-amber-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition duration-300">
-            Inquire
-          </Link>
-
+          </p>          
         </div>
+        
       </div>
 
       {/* 2. EXPLORE ART FORMS SECTION */}
