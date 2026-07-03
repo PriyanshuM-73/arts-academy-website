@@ -164,14 +164,15 @@ export default function Home() {
     }
   }, []); 
 
-  // 5. The 7-Second Infinite Timer
+  // 5. The 3-Second Infinite Timer (1 Photo at a time)
   useEffect(() => {
     if (displayPhotos.length === 0 || isLoading) return;
 
     const photoTimer = setInterval(() => {
       setIsTransitioning(true); 
-      setCurrentIndex((prev) => prev + 2); 
-    }, 7000);
+      // THE FIX: Move strictly by 1 index every tick
+      setCurrentIndex((prev) => prev + 1); 
+    }, 3000); // Waits exactly 3 seconds before moving
 
     return () => clearInterval(photoTimer);
   }, [displayPhotos, isLoading]);
@@ -251,8 +252,10 @@ export default function Home() {
           alt="Sri Siddhi Academy Stage"
           fill
           priority 
-          quality={75}
-          className="object-cover z-0" 
+          fetchPriority="high" 
+          quality={75} 
+          // THE FIX: Centers the focal point on mobile to stop the weird cropping
+          className="object-cover object-top md:object-center z-0" 
         />
         
         {/* 2. THE TRANSLUCENT ORANGE-GOLD-SAFFRON TINT */}
@@ -380,11 +383,11 @@ export default function Home() {
           <div className="overflow-hidden relative w-full">
             
             {/* THE SLIDING TRACK */}
+            {/* THE SLIDING TRACK */}
             <div 
-              // 1. THE CSS VARIABLE TRICK: 100% width on phone, 50% on desktop (md:)
               className="flex [--slide-width:100%] md:[--slide-width:50%]"
               style={{ 
-                // 2. We use the CSS variable to calculate the slide math perfectly for any device!
+                // Because index moves by 1, it slides exactly 1 slide-width per tick!
                 transform: `translateX(calc(-${currentIndex} * var(--slide-width)))`,
                 transition: isTransitioning ? 'transform 700ms ease-in-out' : 'none' 
               }}
