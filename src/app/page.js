@@ -376,40 +376,41 @@ export default function Home() {
           </h2>
           
           {/* THE CAROUSEL CONTAINER */}
+          {/* THE CAROUSEL CONTAINER */}
           <div className="overflow-hidden relative w-full">
             
             {/* THE SLIDING TRACK */}
             <div 
-              className="flex"
+              // 1. THE CSS VARIABLE TRICK: 100% width on phone, 50% on desktop (md:)
+              className="flex [--slide-width:100%] md:[--slide-width:50%]"
               style={{ 
-                transform: `translateX(-${(currentIndex / 2) * 100}%)`,
-                // THE FIX: Inline styles force the browser to drop the animation instantly
+                // 2. We use the CSS variable to calculate the slide math perfectly for any device!
+                transform: `translateX(calc(-${currentIndex} * var(--slide-width)))`,
                 transition: isTransitioning ? 'transform 700ms ease-in-out' : 'none' 
               }}
               onTransitionEnd={() => {
-                // The exact millisecond the slide finishes, check if we hit the secret clones
                 if (currentIndex >= displayPhotos.length) {
-                  setIsTransitioning(false); // 1. Kill animation instantly (No rewind!)
-                  setCurrentIndex(0); // 2. Snap back to the true first photos
+                  setIsTransitioning(false); 
+                  setCurrentIndex(0); 
                 }
               }}
             >
               
-              {/* Maps the 24 photos + the 2 secret clones sewn to the very end */}
               {!isLoading && displayPhotos.length > 0 && 
                 [...displayPhotos, displayPhotos[0], displayPhotos[1]].map((photoUrl, index) => (
                 
-                <div key={index} className="w-1/2 shrink-0 px-2 md:px-3">
+                // 3. Update the width constraint: w-full on phones, md:w-1/2 on desktop
+                <div key={index} className="w-full md:w-1/2 shrink-0 px-2 md:px-3">
                   <div className="relative w-full h-64 md:h-96">
                     <Image 
                       src={photoUrl} 
                       alt={`Annual Function Image ${index + 1}`} 
                       fill
-                      // Updated: Matches our new initial batch of 4
-                      priority={index < 4} 
+                      priority={index < 2} 
                       quality={75}
                       className="object-cover rounded-xl shadow-md"
-                      sizes="50vw" 
+                      // 4. Good practice: Tell Next.js about our new responsive sizing
+                      sizes="(max-width: 768px) 100vw, 50vw" 
                     />
                   </div>
                 </div>
