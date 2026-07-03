@@ -33,7 +33,7 @@ export default function TablaPage() {
 
   return (
     // MUD BROWN BACKGROUND: bg-[#70543E] at 20% opacity
-    <main className="min-h-screen bg-[#70543E]/10 py-20 relative">
+    <main className="min-h-screen bg-[#70543E]/10 pt-36 pb-20 relative">
       
       {/* WATERMARK: Tabla at 60% opacity, fixed behind content */}
       <div className="fixed inset-0 flex items-center justify-center -z-10 opacity-[0.6] pointer-events-none">
