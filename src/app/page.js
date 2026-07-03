@@ -1,157 +1,139 @@
 "use client";
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
-// --- NEW OPTIMIZATION FUNCTION ---
-// This intercepts Cloudinary links and tells their server to shrink the photo
-const optimizeImage = (url) => {
-  if (url && url.includes('cloudinary.com')) {
-    // We swap out the old tags for the new ones including w_800
-    return url.replace('upload/q_auto/f_auto/', 'upload/q_auto,f_auto,w_800/');
-  }
-  return url;
-};
-
-// ... rest of your code ...
 export default function Home() {
 
   // --- GALLERY DATA & LOGIC ---
   
   // Photo Pool (You can add 100+ photos here safely now!)
   const annualPhotos = [
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782826274/353_i6gspa.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782826172/_DSC1341_h9xuki.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782826136/_DSC1312_nhjzsj.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782826134/_DSC1328_g5ffhf.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782826115/_DSC1327_re26h0.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782826101/_DSC1315_nwfxif.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782826008/_DSC1308_yfho55.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825982/_DSC1303_p8uklq.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825979/_DSC1307_aznsff.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825979/_DSC1307_aznsff.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825931/_DSC1302_bkji8w.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825907/_DSC1291_gcncrn.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825858/_DSC1300_sj2ztw.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825835/_DSC1293_ivdw6g.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825831/_DSC1298_xw4jjt.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825822/_DSC1290_bv9zci.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825769/_DSC1287_bvxqyx.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825699/_DSC1283_yyqli0.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825687/_DSC1239_g0cbhc.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825676/_DSC1215_xkigwv.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825655/_DSC1194_pr2xzt.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825648/_DSC1211_mziasr.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825620/_DSC1210_h0leeu.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825565/_DSC1208_qkvsjl.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825535/_DSC1197_am10gw.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825520/_DSC1193_i5bdld.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825480/_DSC1184_luufdx.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825452/_DSC1181_wn6c9z.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825405/_DSC1178_f5j2di.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825391/_DSC1174_axzp8l.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825390/_DSC1153_otdouy.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825341/_DSC1169_alvfqp.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825299/_DSC1140_j8rvtw.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825293/_DSC1120_dzxsog.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825259/_DSC1105_sjwbko.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825240/_DSC1119_ued7or.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825172/_DSC1104_thcyqn.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825129/_DSC1084_ewtjiz.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825125/_DSC1059_owbype.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825121/_DSC1078_olqmlg.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825087/_DSC1076_o0vtvj.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782825085/_DSC1068_tkjv0d.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824992/_DSC1050_cllopc.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824976/_DSC1051_amwkwq.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824958/_DSC1045_i7xyqr.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824920/_DSC1037_hvfndp.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824912/_DSC1019_hves1u.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824876/_DSC1010_o2w72m.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824823/_DSC1017_bg7xp7.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824818/_DSC1012_a4jsdg.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824793/_DSC1008_i8r0yn.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824752/405_aiywm6.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824743/395_dngvs4.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824668/393_ea8uy9.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824665/387_lqt6vg.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824640/377_g9qi4m.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824633/386_sxlqxt.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824614/383_m7kmyu.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824600/380_viu2vv.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824528/375_a5v80n.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824521/367_cvaxe4.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824497/371_zbgs21.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824480/366_lo88dv.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824450/358_oxpmkh.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824446/324_i8cyji.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824395/346_tzmrqo.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824381/338_zu8ynj.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824379/225_toegbx.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824334/321_fdiwrc.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824327/132_uru1el.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824312/209_qflofy.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824294/129_am6izv.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824271/128_qygext.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824212/125_dhyev9.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824200/120_gpnstl.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824191/112_wmq1j1.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824177/114_cla5ke.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824149/103_bzdjab.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824077/95_p5j8oi.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824071/61_o3fkvg.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824055/96_hatqtm.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824053/102_vekcv8.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824042/97_yt4hnk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782824019/86_fqjede.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823942/82_czmmtr.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823926/39_b48vd3.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823916/84_gdvnyk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823915/43_kchryf.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823909/18_jhcjpo.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823904/81_cbyjx8.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823819/30_lmnyms.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823806/78_ika1vd.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823798/80_vgr7yk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823789/33_la3yao.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823785/77_lyfglb.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823719/64_alcmgy.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823685/13_puvdsf.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823684/28_zxpkma.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823673/62_fav5de.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823665/71_krhax3.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1782823659/74_kz3mgr.jpg"
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060864/405_ntdaph.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783061306/395_blqvwk.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060854/387_acf45s.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060853/393_tm0f2x.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060850/386_ygika4.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060841/380_oh0ycj.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060840/383_ndlcdb.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060834/377_liling.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060830/375_cyvc5q.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060827/367_jjuzxy.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060818/371_qrgk2d.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060814/225_j4tsin.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060811/358_bbawog.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060803/324_naskgb.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060801/321_rbef82.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060799/346_z0dovg.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060798/338_uh6x9r.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060790/209_f9earj.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060789/132_qfctrf.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060787/129_irnm7n.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060781/128_qamuqg.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060777/125_lrtinz.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060776/120_ceunee.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060772/114_nra5ra.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060762/112_kulacx.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060759/103_otvaoa.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060752/97_rfjyo3.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060752/96_xyopna.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060749/102_wycxaz.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060747/95_guux3g.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060738/86_kmvanp.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060733/82_zoxofa.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060731/80_pzqzfa.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060729/84_ccbwlw.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060728/81_oto7uq.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060727/78_jjtx7p.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060714/77_k7r8x1.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060710/61_t3gcty.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060708/64_vqrzdb.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060705/62_yqdqgk.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060704/74_dtm0ik.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060703/71_k9wh0v.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060692/43_klp21i.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060688/39_l7ael8.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060686/28_vn4ugl.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060683/13_rxyysd.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060682/18_rnuji7.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060681/30_dfdh3y.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060668/33_mrxrvh.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059164/_DSC1341_shi8rk.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059155/_DSC1328_ykrnz9.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059143/_DSC1311_vlvomk.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059138/_DSC1315_sygvnw.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059137/_DSC1308_c9pbhq.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059137/_DSC1312_yudkph.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059133/_DSC1307_ei2wzc.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059128/_DSC1303_oajcfc.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059113/_DSC1300_oq6sal.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059113/_DSC1302_qjc8uf.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059111/_DSC1293_v622qm.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059108/_DSC1290_wbmvwo.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059107/_DSC1298_ohuwxm.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059102/_DSC1291_wabt5i.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059095/_DSC1287_yqc6sm.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059087/_DSC1239_fb7sve.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059082/_DSC1215_eczyjz.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059081/_DSC1283_qaq4ty.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059079/_DSC1210_qlphas.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059076/_DSC1208_e4tf7c.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059067/_DSC1194_lkpcnl.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059065/_DSC1197_cemwop.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059062/_DSC1184_gwshaf.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059059/_DSC1193_jn67dv.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059056/_DSC1181_e6p7rl.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059053/_DSC1178_z5f83g.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059045/_DSC1174_usrjov.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059039/_DSC1153_h78clo.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059035/_DSC1169_ivbaz2.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059034/_DSC1140_ft5myk.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059032/_DSC1105_xs03jd.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059031/_DSC1120_vvnbre.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059028/_DSC1119_pbirbh.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059022/_DSC1084_yofh7q.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059020/_DSC1104_yutzcl.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059017/_DSC1078_rqedsi.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059016/_DSC1076_vsgjdj.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059011/_DSC1068_tqbtbo.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059011/_DSC1045_qqiw2i.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059008/_DSC1050_d8ps7u.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059001/_DSC1012_f1gylk.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058997/_DSC1017_qdmtnt.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058995/_DSC1037_sg3oe1.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058990/_DSC1008_ghbhrx.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058987/_DSC1010_kwlsn0.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058986/_DSC1051_zrpyrw.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058983/_DSC1059_ka75ao.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058981/_DSC1019_rinfq1.jpg"
   ];
 
 // --- GALLERY DATA & LOGIC ---
-  const galleryRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  
   const [displayPhotos, setDisplayPhotos] = useState([]);
-  const [photoIndices, setPhotoIndices] = useState([0, 1]);
+  const [currentIndex, setCurrentIndex] = useState(0); 
   const [isLoading, setIsLoading] = useState(true);
+  
+  // NEW: Controls whether the camera slides smoothly or snaps invisibly
+  const [isTransitioning, setIsTransitioning] = useState(true); 
 
   useEffect(() => {
-    // 1. Check browser memory for our "bookmark" (default to 0 if first visit)
-    const savedIndex = localStorage.getItem('musicCarouselBookmark');
+    const savedIndex = localStorage.getItem('annualCarouselBookmark');
     const startIndex = savedIndex ? parseInt(savedIndex, 10) : 0;
 
-    // 2. Select the next 10 photos in order (6 for initial, 4 for background)
     const selected = [];
-    for (let i = 0; i < 10; i++) {
-      selected.push(annualPhotos[(startIndex + i) % annualPhotos.length]);
+    if (annualPhotos && annualPhotos.length > 0) {
+      for (let i = 0; i < 24; i++) {
+        selected.push(annualPhotos[(startIndex + i) % annualPhotos.length]);
+      }
     }
 
-    // 3. Save the NEXT starting point in the browser memory for the next reload
-    const nextStartIndex = (startIndex + 10) % annualPhotos.length;
-    localStorage.setItem('musicCarouselBookmark', nextStartIndex.toString());
+    if (annualPhotos && annualPhotos.length > 0) {
+      const nextStartIndex = (startIndex + 24) % annualPhotos.length;
+      localStorage.setItem('annualCarouselBookmark', nextStartIndex.toString());
+    }
 
-    // 4. Split into initial load (first 6) and deferred load (last 4)
-    const initialBatch = selected.slice(0, 6);
-    const deferredBatch = selected.slice(6);
-
-    const preloadImages = (imageUrls) => {
+    const preloadAllImages = (imageUrls) => {
       return Promise.all(
         imageUrls.map((src) => {
           return new Promise((resolve) => {
@@ -164,39 +146,28 @@ export default function Home() {
       );
     };
 
-    // 5. Wait for the first 6, lift the loading screen, then load the rest
-    preloadImages(initialBatch).then(() => {
-      setDisplayPhotos(selected); 
-      setIsLoading(false);        
-      
-      // Silently fetch the remaining 4 in the background
-      preloadImages(deferredBatch);
-    });
-  }, [annualPhotos]); 
+    if (selected.length > 0) {
+      Promise.all([
+        preloadAllImages(selected),
+        new Promise((resolve) => setTimeout(resolve, 3000))
+      ]).then(() => {
+        setDisplayPhotos(selected);
+        setIsLoading(false); 
+      });
+    }
+  }, []); 
 
-  // 6. Visibility Sensor: Detects if the user is actually looking at the gallery
+  // 6. The 7-Second Infinite Timer
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-
-    if (galleryRef.current) observer.observe(galleryRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  // 7. Carousel Timer: Cycles ONLY if photos are loaded AND the gallery is visible
-  useEffect(() => {
-    if (displayPhotos.length === 0 || isLoading || !isVisible) return; 
+    if (displayPhotos.length === 0 || isLoading) return;
 
     const photoTimer = setInterval(() => {
-      setPhotoIndices((prev) => [
-        (prev[0] + 2) % displayPhotos.length,
-        (prev[1] + 2) % displayPhotos.length,
-      ]);
-    }, 5000);
+      setIsTransitioning(true); // 1. Turn the smooth slide ON
+      setCurrentIndex((prev) => prev + 2); // 2. Move forward
+    }, 7000);
+
     return () => clearInterval(photoTimer);
-  }, [displayPhotos, isLoading, isVisible]);
+  }, [displayPhotos, isLoading]);
 
   return (
     <main className="min-h-screen bg-gray-50 relative">
@@ -265,19 +236,23 @@ export default function Home() {
       )}
       
       {/* 1. HERO SECTION */}
-      {/* --- HERO SECTION WITH ORANGE-GOLD-SAFFRON TINT --- */}
-      <div 
-        className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center" 
-        style={{ backgroundImage: "url('/home_bg.JPG')" }} 
-      >
+      {/* --- HERO SECTION WITH NEXT.JS IMAGE OPTIMIZATION --- */}
+      <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
         
-        {/* THE TRANSLUCENT ORANGE-GOLD-SAFFRON LAYER */}
-        {/* bg-[#FDBB08] is your exact custom color mix */}
-        {/* opacity-30 keeps it light enough that the photo underneath stays visible */}
-        <div className="absolute inset-0 bg-[#FDBB08] opacity-30 pointer-events-none z-0"></div>
+        <Image 
+          src="/home_bg.JPG" 
+          alt="Sri Siddhi Academy Stage"
+          fill
+          priority 
+          quality={75}
+          className="object-cover z-0" 
+        />
+        
+        {/* 2. THE TRANSLUCENT ORANGE-GOLD-SAFFRON TINT */}
+        <div className="absolute inset-0 bg-[#FDBB08] opacity-30 pointer-events-none z-10"></div>
 
-        {/* YOUR CONTENT */}
-        <div className="relative z-10 flex flex-col items-center justify-center p-4 text-center">
+        {/* 3. YOUR CONTENT */}
+        <div className="relative z-20 flex flex-col items-center justify-center p-4 text-center">
           
           <h1 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-2xl mb-6 tracking-tight">
             Sri Siddhi Academy of Art
@@ -357,55 +332,84 @@ export default function Home() {
       <section className="py-20 bg-stone-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Notice Board</h2>
-            <p className="text-gray-600">Stay updated with the latest events, exams, and announcements.</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">announcements</h2>
+            <p className="text-gray-600">Stay updated with the latest events, exams, and other notices.</p>
           </div>
           <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="flex flex-col sm:flex-row border-b border-gray-100 p-6 hover:bg-gray-50 transition">
               <div className="sm:w-32 shrink-0 mb-4 sm:mb-0">
-                <div className="text-amber-700 font-bold text-xl">15 May</div>
+                <div className="text-amber-700 font-bold text-xl">17 July</div>
                 <div className="text-gray-500 text-sm font-medium">2026</div>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Upcoming Exam Registrations</h3>
-                <p className="text-gray-600">Registrations for the Visharad examinations are now open. Please submit your forms to the administration desk.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-1">Rath Yatra Bhajan Sandhya</h3>
+                <p className="text-gray-600">Watch our Institute students perform at Sector-20 Gundicha Mandir.</p>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row p-6 hover:bg-gray-50 transition">
               <div className="sm:w-32 shrink-0 mb-4 sm:mb-0">
-                <div className="text-amber-700 font-bold text-xl">02 Jun</div>
+                <div className="text-amber-700 font-bold text-xl">23 July</div>
                 <div className="text-gray-500 text-sm font-medium">2026</div>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Annual Summer Workshop</h3>
-                <p className="text-gray-600">Join our special 10-day intensive workshop focusing on advanced theory and stage performance.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-1">Rath Yatra Bhajan Sandhya</h3>
+                <p className="text-gray-600">Watch our Institute students perform at Maa Bata Mangala Mandir, Jagda.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. DYNAMIC ANNUAL FUNCTION GALLERY (Optimized Next/Image) */}
-      {/* DYNAMIC ANNUAL FUNCTION GALLERY */}
-      {/* DYNAMIC ANNUAL FUNCTION GALLERY */}
-      <section className="py-20 bg-white" ref={galleryRef}>
-        <div className="max-w-4xl mx-auto px-4">
+      {/* --- DYNAMIC ANNUAL FUNCTION GALLERY CAROUSEL --- */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
           
           <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-gray-900 tracking-tight">
             Annual Function Glimpses
           </h2>
           
-          <div className="flex gap-4 overflow-hidden relative">
-            {/* We wrap 'photo' in our new optimizeImage function here too */}
-            {displayPhotos.map((photo, index) => (
-              <div key={index} className="w-1/2 shrink-0">
-                <img 
-                  src={optimizeImage(photo)} 
-                  className="w-full h-64 md:h-96 object-cover rounded-xl shadow-md" 
-                  alt={`Annual Function ${index + 1}`} 
-                />
-              </div>
-            ))}
+          {/* THE CAROUSEL CONTAINER */}
+          <div className="overflow-hidden relative w-full">
+            
+            {/* THE SLIDING TRACK */}
+            <div 
+              className="flex"
+              style={{ 
+                transform: `translateX(-${(currentIndex / 2) * 100}%)`,
+                // THE FIX: Inline styles force the browser to drop the animation instantly
+                transition: isTransitioning ? 'transform 700ms ease-in-out' : 'none' 
+              }}
+              onTransitionEnd={() => {
+                // The exact millisecond the slide finishes, check if we hit the secret clones
+                if (currentIndex >= displayPhotos.length) {
+                  setIsTransitioning(false); // 1. Kill animation instantly (No rewind!)
+                  setCurrentIndex(0); // 2. Snap back to the true first photos
+                }
+              }}
+            >
+              
+              {/* Maps the 24 photos + the 2 secret clones sewn to the very end */}
+              {!isLoading && displayPhotos.length > 0 && 
+                [...displayPhotos, displayPhotos[0], displayPhotos[1]].map((photoUrl, index) => (
+                
+                <div key={index} className="w-1/2 shrink-0 px-2 md:px-3">
+                  <div className="relative w-full h-64 md:h-96">
+                    <Image 
+                      src={photoUrl} 
+                      alt={`Annual Function Image ${index + 1}`} 
+                      fill
+                      priority={index < 12} 
+                      quality={75}
+                      className="object-cover rounded-xl shadow-md"
+                      sizes="50vw" 
+                    />
+                  </div>
+                </div>
+                
+              ))}
+              
+            </div>
+            
           </div>
           
         </div>

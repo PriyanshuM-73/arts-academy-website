@@ -87,9 +87,10 @@ export default function TablaPage() {
               style={{ transform: `translateX(-${currentIndex * 50}%)` }}
               onTransitionEnd={handleTransitionEnd}
             >
+               {/* We map through the NEW extended array here */}
                {extendedPhotos.map((photo, index) => (
                  <div key={index} className="w-1/2 shrink-0 px-2">
-                   <img src={photo} className="w-full h-48 md:h-72 object-cover rounded-lg shadow-sm" alt={`Tabla class snapshot ${index + 1}`} />
+                   <img src={photo} className="w-full h-48 md:h-72 object-cover rounded-lg shadow-sm" alt={`Class snapshot ${index + 1}`} />
                  </div>
                ))}
             </div>
@@ -105,14 +106,14 @@ export default function TablaPage() {
           <div className="flex flex-col items-center md:items-start w-full md:w-1/3">
             <div className="w-56 aspect-3/4 overflow-hidden border-4 border-amber-50 shadow-md rounded-lg mb-12">
               <img 
-                src="/Mt.jpg" 
+                src="/Tt.jpeg" 
                 alt="Teacher Portrait" 
                 className="w-full h-full object-cover" 
               />
             </div>
             <div className="text-center md:text-left">
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">Prafulla Kumar Mangal</h3>
-              <h4 className="text-amber-700 font-bold tracking-wide uppercase text-sm">Music Guru</h4>
+              <h3 className="text-3xl font-bold text-gray-900 mb-1">Nrusingha Charan Sahoo</h3>
+              <h4 className="text-amber-700 font-bold tracking-wide uppercase text-sm">Tabla Teacher</h4>
             </div>
           </div>
 
@@ -122,7 +123,7 @@ export default function TablaPage() {
             {/* Single Instrument Sticker - Anchored to the top right corner */}
             <div className="absolute top-0 right-0 w-64 md:w-80 rotate-3 hover:rotate-0 transition-transform duration-500 ease-out cursor-pointer">
               <img 
-                src="/Mst.webp" 
+                src="/Tst.jpeg" 
                 alt="Instrument Sticker" 
                 className="w-full h-auto drop-shadow-xl" 
               />

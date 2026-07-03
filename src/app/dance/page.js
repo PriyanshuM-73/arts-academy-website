@@ -86,9 +86,10 @@ export default function DancePage() {
               style={{ transform: `translateX(-${currentIndex * 50}%)` }}
               onTransitionEnd={handleTransitionEnd}
             >
+               {/* We map through the NEW extended array here */}
                {extendedPhotos.map((photo, index) => (
                  <div key={index} className="w-1/2 shrink-0 px-2">
-                   <img src={photo} className="w-full h-48 md:h-72 object-cover rounded-lg shadow-sm" alt={`Dance class snapshot ${index + 1}`} />
+                   <img src={photo} className="w-full h-48 md:h-72 object-cover rounded-lg shadow-sm" alt={`Class snapshot ${index + 1}`} />
                  </div>
                ))}
             </div>

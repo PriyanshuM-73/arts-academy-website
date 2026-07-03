@@ -132,7 +132,7 @@ export default function MusicPage() {
             </div>
             <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold text-gray-900 mb-1">Prafulla Kumar Mangal</h3>
-              <h4 className="text-amber-700 font-bold tracking-wide uppercase text-sm">Music Guru</h4>
+              <h4 className="text-amber-700 font-bold tracking-wide uppercase text-sm">Music Teacher</h4>
             </div>
           </div>
 
