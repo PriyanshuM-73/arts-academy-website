@@ -4,6 +4,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 
+// --- NEW OPTIMIZATION FUNCTION ---
+// This intercepts Cloudinary links and tells their server to shrink the photo
+const optimizeImage = (url) => {
+  if (url && url.includes('cloudinary.com')) {
+    // We swap out the old tags for the new ones including w_800
+    return url.replace('upload/q_auto/f_auto/', 'upload/q_auto,f_auto,w_800/');
+  }
+  return url;
+};
+
+// ... rest of your code ...
 export default function Home() {
 
   // --- GALLERY DATA & LOGIC ---
@@ -371,26 +382,24 @@ export default function Home() {
 
       {/* 4. DYNAMIC ANNUAL FUNCTION GALLERY (Optimized Next/Image) */}
       {/* 4. DYNAMIC ANNUAL FUNCTION GALLERY */}
+      {/* DYNAMIC ANNUAL FUNCTION GALLERY */}
       <section className="py-20 bg-white" ref={galleryRef}>
         <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Annual Function Glimpses</h2>
-            <p className="text-gray-600">Celebrating 18 years of dedication, talent, and artistic expression.</p>
-          </div>
+          <h2 className="text-3xl font-bold text-center mb-12">Annual Function Glimpses</h2>
           
-          <div className="grid grid-cols-2 gap-2 md:gap-4 bg-gray-100 p-2 md:p-4 rounded-3xl border border-gray-200">
-            {photoIndices.map((idx, i) => (
-              <div key={i} className="aspect-square rounded-xl md:rounded-2xl overflow-hidden shadow-sm relative">
-                {displayPhotos[idx] && (
-                  <img 
-                    src={displayPhotos[idx]} 
-                    alt="Annual Function Moment" 
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
-                  />
-                )}
+          <div className="flex gap-4 overflow-hidden relative">
+            {/* We wrap 'photo' in our new optimizeImage function here too */}
+            {displayPhotos.map((photo, index) => (
+              <div key={index} className="w-1/2 shrink-0">
+                <img 
+                  src={optimizeImage(photo)} 
+                  className="w-full h-64 md:h-96 object-cover rounded-xl shadow-md" 
+                  alt={`Annual Function ${index + 1}`} 
+                />
               </div>
             ))}
           </div>
+          
         </div>
       </section>
 
