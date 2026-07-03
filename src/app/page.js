@@ -265,27 +265,30 @@ export default function Home() {
       )}
       
       {/* 1. HERO SECTION */}
-      {/* --- HERO SECTION WITH CUSTOM TINT --- */}
+      {/* --- HERO SECTION WITH ORANGE-GOLD-SAFFRON TINT --- */}
       <div 
-        className="relative w-full min-h-screen bg-cover bg-center bg-fixed" 
-        style={{ backgroundImage: "url('/your-background-photo.jpg')" }} // Change to your actual photo URL
+        className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center" 
+        style={{ backgroundImage: "url('/home_bg.JPG')" }} 
       >
         
-        {/* THE TINT OVERLAY */}
-        {/* bg-[#FDBB08] is your exact custom 3:2:1 color mix */}
-        {/* mix-blend-multiply combines the color with the photo realistically */}
-        <div className="absolute inset-0 bg-[#FDBB08] opacity-40 mix-blend-multiply pointer-events-none"></div>
+        {/* THE TRANSLUCENT ORANGE-GOLD-SAFFRON LAYER */}
+        {/* bg-[#FDBB08] is your exact custom color mix */}
+        {/* opacity-30 keeps it light enough that the photo underneath stays visible */}
+        <div className="absolute inset-0 bg-[#FDBB08] opacity-30 pointer-events-none z-0"></div>
 
         {/* YOUR CONTENT */}
-        {/* 'relative z-10' ensures your text and buttons sit strictly ABOVE the tint */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center">
+        <div className="relative z-10 flex flex-col items-center justify-center p-4 text-center">
           
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg mb-6">
+          <h1 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-2xl mb-6 tracking-tight">
             Sri Siddhi Academy of Art
           </h1>
-          <p className="text-xl md:text-2xl text-white font-medium drop-shadow-md max-w-2xl">
+          <p className="text-xl md:text-2xl text-white font-medium drop-shadow-lg max-w-2xl mb-10">
             Nurturing talent across Music, Dance, Tabla, and Fine Arts.
           </p>
+          
+          <Link href="/contacts" className="bg-amber-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition duration-300">
+            Inquire
+          </Link>
 
         </div>
       </div>
@@ -384,9 +387,13 @@ export default function Home() {
 
       {/* 4. DYNAMIC ANNUAL FUNCTION GALLERY (Optimized Next/Image) */}
       {/* DYNAMIC ANNUAL FUNCTION GALLERY */}
+      {/* DYNAMIC ANNUAL FUNCTION GALLERY */}
       <section className="py-20 bg-white" ref={galleryRef}>
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-black">Annual Function Glimpses</h2>
+          
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-gray-900 tracking-tight">
+            Annual Function Glimpses
+          </h2>
           
           <div className="flex gap-4 overflow-hidden relative">
             {/* We wrap 'photo' in our new optimizeImage function here too */}
