@@ -129,13 +129,13 @@ export default function Home() {
 
     if (annualPhotos && annualPhotos.length > 0) {
       // 2. Jump the bookmark by 14 for the next visit
-      const nextStartIndex = (startIndex + 14) % annualPhotos.length;
+      const nextStartIndex = (startIndex + 12) % annualPhotos.length;
       localStorage.setItem('annualCarouselBookmark', nextStartIndex.toString());
     }
 
     // 3. Split the workload: Block screen for the first 4 photos
-    const initialBatch = selected.slice(0, 4); 
-    const backgroundBatch = selected.slice(4); // The remaining 10 photos
+    const initialBatch = selected.slice(0, 2); 
+    const backgroundBatch = selected.slice(2); // The remaining 10 photos
 
     const preloadAllImages = (imageUrls) => {
       return Promise.all(
