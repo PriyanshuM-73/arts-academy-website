@@ -265,28 +265,30 @@ export default function Home() {
       )}
       
       {/* 1. HERO SECTION */}
-      <section className="relative bg-amber-900 text-white">
-        <div className="absolute inset-0 overflow-hidden">
-          <img 
-            src="/home_bg.JPG" 
-            alt="Sri Siddhi Academy Background" 
-            className="w-full h-full object-cover opacity-30"
-          />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-48 flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
-            Welcome to Sri Siddhi Academy of Art
+      {/* --- HERO SECTION WITH CUSTOM TINT --- */}
+      <div 
+        className="relative w-full min-h-screen bg-cover bg-center bg-fixed" 
+        style={{ backgroundImage: "url('/your-background-photo.jpg')" }} // Change to your actual photo URL
+      >
+        
+        {/* THE TINT OVERLAY */}
+        {/* bg-[#FDBB08] is your exact custom 3:2:1 color mix */}
+        {/* mix-blend-multiply combines the color with the photo realistically */}
+        <div className="absolute inset-0 bg-[#FDBB08] opacity-40 mix-blend-multiply pointer-events-none"></div>
+
+        {/* YOUR CONTENT */}
+        {/* 'relative z-10' ensures your text and buttons sit strictly ABOVE the tint */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center">
+          
+          <h1 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg mb-6">
+            Sri Siddhi Academy of Art
           </h1>
-          <p className="mt-4 text-xl md:text-2xl max-w-3xl mb-10 text-amber-100">
-            Nurturing talent across Music, Dance, Tabla, and Fine Arts. Begin your artistic journey with our experienced gurus.
+          <p className="text-xl md:text-2xl text-white font-medium drop-shadow-md max-w-2xl">
+            Nurturing talent across Music, Dance, Tabla, and Fine Arts.
           </p>
-          <div className="flex justify-center mt-8">
-            <Link href="/contacts" className="bg-white text-amber-900 px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-lg">
-              Contact Us
-            </Link>
-          </div>
+
         </div>
-      </section>
+      </div>
 
       {/* 2. EXPLORE ART FORMS SECTION */}
       <section className="py-20 bg-white">
@@ -381,11 +383,10 @@ export default function Home() {
       </section>
 
       {/* 4. DYNAMIC ANNUAL FUNCTION GALLERY (Optimized Next/Image) */}
-      {/* 4. DYNAMIC ANNUAL FUNCTION GALLERY */}
       {/* DYNAMIC ANNUAL FUNCTION GALLERY */}
       <section className="py-20 bg-white" ref={galleryRef}>
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Annual Function Glimpses</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-black">Annual Function Glimpses</h2>
           
           <div className="flex gap-4 overflow-hidden relative">
             {/* We wrap 'photo' in our new optimizeImage function here too */}
