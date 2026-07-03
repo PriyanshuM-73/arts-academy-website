@@ -31,7 +31,7 @@ export default function MusicPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#7B3F00]/75 py-20 relative">
+    <main className="min-h-screen bg-[#7B3F00]/75 pt-36 pb-20 relative">
       
       {/* WATERMARK: Harmonium now enlarged to w-3/4 and max-w-4xl */}
       <div className="fixed inset-0 flex items-center justify-center -z-10 opacity-[0.6] pointer-events-none">
