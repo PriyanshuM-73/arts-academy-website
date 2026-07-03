@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 
 export default function FineArtsPage() {
   
-  // --- CAROUSEL DATA & LOGIC ---
   const classPhotos = [
     "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1000&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1000&auto=format&fit=crop",
@@ -13,49 +12,47 @@ export default function FineArtsPage() {
     "https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?q=80&w=1000&auto=format&fit=crop"
   ];
 
-  // 1. The Trick: Copy the first two photos to the end of the line
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
-  // 2. The Timer: Keeps moving forward
   useEffect(() => {
     const timer = setInterval(() => {
-      setIsTransitioning(true); // Ensure sliding animation is ON
+      setIsTransitioning(true);
       setCurrentIndex((prev) => prev + 1);
     }, 3000); 
     return () => clearInterval(timer);
   }, []);
 
-  // 3. The Teleport: Fires exactly when the sliding animation finishes
   const handleTransitionEnd = () => {
-    // If we have slid all the way to our secret copied photos...
     if (currentIndex === classPhotos.length) {
-      setIsTransitioning(false); // Turn OFF the smooth sliding
-      setCurrentIndex(0);        // Instantly teleport back to the real beginning
+      setIsTransitioning(false);
+      setCurrentIndex(0);
     }
   };
 
-
   return (
-    <main className="min-h-screen bg-gray-50 py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    // CYAN BACKGROUND: bg-cyan-500 at 50% opacity
+    <main className="min-h-screen bg-cyan-500/50 py-20 relative">
+      
+      {/* WATERMARK: Brushes/Paint at 50% opacity, fixed behind content */}
+      <div className="fixed inset-0 flex items-center justify-center -z-10 opacity-50 pointer-events-none">
+         <img src="/Ft.png" alt="" className="w-1/2 max-w-lg object-contain" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* HEADER */}
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-10 text-center">
           Fine Arts & Painting
         </h1>
         
-        {/* 1. CURRICULUM & PHOTOS BOX */}
-        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 mb-12">
+        <div className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-sm border border-white/50 mb-12">
           
           <h2 className="text-2xl font-semibold text-teal-800 mb-4">Curriculum Overview</h2>
           <p className="text-gray-700 mb-8 text-lg leading-relaxed">
             Our Fine Arts classes focus on the fundamentals of drawing, color theory, and creative expression. We start with simple lines and basic shapes, guiding you step-by-step toward advanced compositions, landscaping, and classical painting styles.
           </p>
           
-          {/* Stages of Learning */}
           <div className="bg-teal-50/50 border border-teal-100 p-6 md:p-8 rounded-2xl mb-10">
              <h3 className="text-xl font-bold text-teal-900 mb-6">Stages of Learning</h3>
              <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-x-4 gap-y-6">
@@ -80,14 +77,12 @@ export default function FineArtsPage() {
              </div>
           </div>
 
-          {/* Photos Directly Below Stages of Learning */}
-          <div className="overflow-hidden relative w-full rounded-xl bg-gray-50 border border-gray-100 p-2">
+          <div className="overflow-hidden relative w-full rounded-xl bg-gray-50/50 border border-gray-100 p-2">
             <div 
               className={`flex ${isTransitioning ? 'transition-transform duration-1000 ease-in-out' : ''}`}
               style={{ transform: `translateX(-${currentIndex * 50}%)` }}
               onTransitionEnd={handleTransitionEnd}
             >
-               {/* We map through the NEW extended array here */}
                {extendedPhotos.map((photo, index) => (
                  <div key={index} className="w-1/2 shrink-0 px-2">
                    <img src={photo} className="w-full h-48 md:h-72 object-cover rounded-lg shadow-sm" alt={`Class snapshot ${index + 1}`} />
@@ -95,21 +90,12 @@ export default function FineArtsPage() {
                ))}
             </div>
           </div>
-
         </div>
 
-        {/* Teacher Profile Section */}
-        {/* Changed gap-8 to gap-20 to push the columns further apart */}
         <div className="flex flex-col md:flex-row items-start gap-20 max-w-5xl mx-auto py-12">
-  
-          {/* Left Column: Photo + Text */}
           <div className="flex flex-col items-center md:items-start w-full md:w-1/3">
             <div className="w-56 aspect-3/4 overflow-hidden border-4 border-amber-50 shadow-md rounded-lg mb-12">
-              <img 
-                src="/At.jpeg" 
-                alt="Teacher Portrait" 
-                className="w-full h-full object-cover" 
-              />
+              <img src="/At.jpeg" alt="Teacher" className="w-full h-full object-cover" />
             </div>
             <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold text-gray-900 mb-1">Jyotsnarani Upadhyaya</h3>
@@ -117,24 +103,15 @@ export default function FineArtsPage() {
             </div>
           </div>
 
-          {/* Right Column: Sticker Area */}
-          <div className="flex-1 w-full relative h-75 md:h-auto">
-            
-            {/* Single Instrument Sticker - Anchored to the top right corner */}
+          <div className="flex-1 w-full relative">
             <div className="absolute top-0 right-0 w-64 md:w-80 rotate-3 hover:rotate-0 transition-transform duration-500 ease-out cursor-pointer">
-              <img 
-                src="/Ast.jpeg" 
-                alt="Instrument Sticker" 
-                className="w-full h-auto drop-shadow-xl" 
-              />
+              <img src="/Ast.jpeg" alt="Instrument Sticker" className="w-full h-auto drop-shadow-xl" />
             </div>
-            
           </div>
         </div>
-
       </div>
-      {/* Contact Us Button - Sits at the bottom of the page content */}
-      <div className="w-full flex justify-center mt-12 mb-16">
+      
+      <div className="w-full flex justify-center mt-12 mb-16 relative z-10">
         <Link 
           href="/contacts"
           className="bg-red-600 hover:bg-red-700 text-white text-lg font-extrabold py-3 px-10 rounded-full shadow-md transition-transform duration-300 hover:scale-105"
