@@ -113,8 +113,6 @@ export default function Home() {
   const [displayPhotos, setDisplayPhotos] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0); 
   const [isLoading, setIsLoading] = useState(true);
-  
-  // NEW: Controls whether the camera slides smoothly or snaps invisibly
   const [isTransitioning, setIsTransitioning] = useState(true); 
 
   useEffect(() => {
@@ -123,15 +121,21 @@ export default function Home() {
 
     const selected = [];
     if (annualPhotos && annualPhotos.length > 0) {
-      for (let i = 0; i < 16; i++) {
+      // 1. Changed from 24 to 14 total photos
+      for (let i = 0; i < 14; i++) {
         selected.push(annualPhotos[(startIndex + i) % annualPhotos.length]);
       }
     }
 
     if (annualPhotos && annualPhotos.length > 0) {
-      const nextStartIndex = (startIndex + 16) % annualPhotos.length;
+      // 2. Jump the bookmark by 14 for the next visit
+      const nextStartIndex = (startIndex + 14) % annualPhotos.length;
       localStorage.setItem('annualCarouselBookmark', nextStartIndex.toString());
     }
+
+    // 3. Split the workload: Block screen for the first 4 photos
+    const initialBatch = selected.slice(0, 4); 
+    const backgroundBatch = selected.slice(4); // The remaining 10 photos
 
     const preloadAllImages = (imageUrls) => {
       return Promise.all(
@@ -148,22 +152,25 @@ export default function Home() {
 
     if (selected.length > 0) {
       Promise.all([
-        preloadAllImages(selected),
-        new Promise((resolve) => setTimeout(resolve, 3000))
+        preloadAllImages(initialBatch), 
+        new Promise((resolve) => setTimeout(resolve, 3000)) 
       ]).then(() => {
         setDisplayPhotos(selected);
         setIsLoading(false); 
+        
+        // 4. Silently download the remaining 10 photos in the background
+        preloadAllImages(backgroundBatch);
       });
     }
   }, []); 
 
-  // 6. The 7-Second Infinite Timer
+  // 5. The 7-Second Infinite Timer
   useEffect(() => {
     if (displayPhotos.length === 0 || isLoading) return;
 
     const photoTimer = setInterval(() => {
-      setIsTransitioning(true); // 1. Turn the smooth slide ON
-      setCurrentIndex((prev) => prev + 2); // 2. Move forward
+      setIsTransitioning(true); 
+      setCurrentIndex((prev) => prev + 2); 
     }, 7000);
 
     return () => clearInterval(photoTimer);
@@ -398,7 +405,8 @@ export default function Home() {
                       src={photoUrl} 
                       alt={`Annual Function Image ${index + 1}`} 
                       fill
-                      priority={index < 12} 
+                      // Updated: Matches our new initial batch of 4
+                      priority={index < 4} 
                       quality={75}
                       className="object-cover rounded-xl shadow-md"
                       sizes="50vw" 
