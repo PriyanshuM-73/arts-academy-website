@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function ContactPage() {
   return (
     // GOLDEN HUE: bg-amber-500 at 25% opacity
-    <main className="min-h-screen bg-cyan-200 py-20 relative">
+    <main className="min-h-screen bg-cyan-200 pt-36 pb-20 relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
