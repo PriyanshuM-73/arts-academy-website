@@ -267,7 +267,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-linear-to-br from-orange-700/40 to-amber-500/40 z-1"></div>
 
         {/* 3. Your Website Text */}
-        <div className="relative z-10 flex flex-col items-center text-center px-4 w-full translate-y-16 md:translate-y-22">
+        <div className="relative z-10 flex flex-col items-center text-center px-4 w-full translate-y-16 md:translate-y-18">
           
           <h1 className="text-4xl md:text-6xl font-extrabold text-blue-100 drop-shadow-[0_0_20px_rgba(29,78,216,1)] z-10 relative">
   Sri Siddhi Academy of Art
