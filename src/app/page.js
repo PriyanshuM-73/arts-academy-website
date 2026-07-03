@@ -178,7 +178,7 @@ export default function Home() {
   }, [displayPhotos, isLoading]);
 
   return (
-    <main className="min-h-screen bg-gray-50 relative">
+    <main className="min-h-screen bg-purple-500/20 relative">
       
       {/* --- CUSTOM PIANO KEY ANIMATION STYLES --- */}
       <style>{`
@@ -280,10 +280,10 @@ export default function Home() {
       </div>
 
       {/* 2. EXPLORE ART FORMS SECTION */}
-      <section className="py-20 bg-white">
+      <section className="py-20 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Explore Our Art Forms</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-green-500 mb-4">Explore Our Art Forms</h2>
             <div className="w-24 h-1 bg-amber-700 mx-auto rounded"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -340,11 +340,12 @@ export default function Home() {
       </section>
 
       {/* 3. NOTICE BOARD */}
-      <section className="py-20 bg-stone-100">
+      {/* THE FIX: Removed bg-stone-100 here to let purple show through */}
+      <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Announcements</h2>
-            <p className="text-gray-600">Stay updated with the latest events, exams, and other notices.</p>
+            <h2 className="text-3xl font-bold text-orange-500 mb-4">Announcements</h2>
+            <p className="text-yellow-500">Stay updated with the latest events, exams, and other notices.</p>
           </div>
           <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="flex flex-col sm:flex-row border-b border-gray-100 p-6 hover:bg-gray-50 transition">
@@ -372,10 +373,11 @@ export default function Home() {
       </section>
 
       {/* --- DYNAMIC ANNUAL FUNCTION GALLERY CAROUSEL --- */}
-      <section className="py-20 bg-white">
+      {/* THE FIX: Removed bg-white here to let purple show through */}
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
           
-          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-gray-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-cyan-400 tracking-tight">
             Annual Function Glimpses
           </h2>
           
