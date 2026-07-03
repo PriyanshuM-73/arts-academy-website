@@ -1,5 +1,5 @@
 "use client"; 
-
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function MusicPage() {
@@ -150,6 +150,15 @@ export default function MusicPage() {
             
           </div>
         </div>
+      </div>
+      {/* Contact Us Button - Sits at the bottom of the page content */}
+      <div className="w-full flex justify-center mt-12 mb-16">
+        <Link 
+          href="/contacts"
+          className="bg-red-600 hover:bg-red-700 text-white text-lg font-extrabold py-3 px-10 rounded-full shadow-md transition-transform duration-300 hover:scale-105"
+        >
+          Contact Us
+        </Link>
       </div>
     </main>
   );
