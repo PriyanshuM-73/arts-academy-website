@@ -125,7 +125,7 @@ export default function MusicPage() {
           <div className="flex flex-col items-center md:items-start w-full md:w-1/3">
             <div className="w-56 aspect-3/4 overflow-hidden border-4 border-amber-50 shadow-md rounded-lg mb-12">
               <img 
-                src="/Mt.jpg" 
+                src="/Mt.JPG" 
                 alt="Teacher Portrait" 
                 className="w-full h-full object-cover" 
               />

@@ -257,7 +257,7 @@ export default function Home() {
       <section className="relative bg-amber-900 text-white">
         <div className="absolute inset-0 overflow-hidden">
           <img 
-            src="/home_bg.jpg" 
+            src="/home_bg.JPG" 
             alt="Sri Siddhi Academy Background" 
             className="w-full h-full object-cover opacity-30"
           />
@@ -299,7 +299,7 @@ export default function Home() {
             </Link>
             <Link href="/dance" className="group block bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
               <div className="h-48 bg-rose-800 relative overflow-hidden">
-                 <img src="/Fdance.jpg" alt="Dance" className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
+                 <img src="/Fdance.JPG" alt="Dance" className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Classical Dance</h3>
@@ -311,7 +311,7 @@ export default function Home() {
             </Link>
             <Link href="/tabla" className="group block bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
               <div className="h-48 bg-stone-800 relative overflow-hidden">
-                 <img src="/Ftabla.jpg" alt="Tabla" className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
+                 <img src="/Ftabla.JPG" alt="Tabla" className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Tabla & Percussions</h3>
@@ -323,7 +323,7 @@ export default function Home() {
             </Link>
             <Link href="/fine-arts" className="group block bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
               <div className="h-48 bg-teal-800 relative overflow-hidden">
-                 <img src="/Ffa.jpg" alt="Fine Arts" className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
+                 <img src="/Ffa.JPG" alt="Fine Arts" className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Fine Arts & Painting</h3>
