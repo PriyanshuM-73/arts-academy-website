@@ -98,7 +98,7 @@ export default function TablaPage() {
               <img src="/Tt.jpeg" alt="Teacher" className="w-full h-full object-cover" />
             </div>
             <div className="text-center md:text-left">
-              <h3 className="text-3xl font-bold text-gray-100 mb-1">Nrusingha Charan Sahoo</h3>
+              <h3 className="text-3xl font-bold text-red-400 mb-1">Nrusingha Charan Sahoo</h3>
               <h4 className="text-amber-500 font-bold tracking-wide uppercase text-sm">Tabla Teacher</h4>
             </div>
           </div>
