@@ -5,11 +5,11 @@ import { useState, useEffect } from 'react';
 export default function FineArtsPage() {
   
   const classPhotos = [
-    "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1000&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1000&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1000&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=1000&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?q=80&w=1000&auto=format&fit=crop"
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174706/Fcar1_zr86pn.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174711/Fcar2_dvks8t.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174708/Fcar3_smexmo.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174710/Fcar4_vamlrx.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174705/Fcar5_lteqds.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];
