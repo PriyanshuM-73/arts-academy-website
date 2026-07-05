@@ -300,7 +300,7 @@ export default function Home() {
       <section className="py-20 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Explore Our Art Forms</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-green-500 mb-4">Explore Our Art Forms</h2>
             <div className="w-24 h-1 bg-amber-700 mx-auto rounded"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -360,8 +360,8 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Announcements</h2>
-            <p className="text-gray-600">Stay updated with the latest events, exams, and other notices.</p>
+            <h2 className="text-3xl font-bold text-orange-400 mb-4">Announcements</h2>
+            <p className="text-gray-50">Stay updated with the latest events, exams, and other notices.</p>
           </div>
           <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="flex flex-col sm:flex-row border-b border-gray-100 p-6 hover:bg-gray-50 transition">
@@ -392,7 +392,7 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 relative">
           
-          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-gray-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-cyan-300 tracking-tight">
             Annual Function Glimpses
           </h2>
           
