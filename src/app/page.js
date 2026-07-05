@@ -172,13 +172,14 @@ export default function Home() {
 
     const timer = setInterval(() => {
       setIsTransitioning(true);
-      setCurrentIndex((prev) => (prev === displayPhotos.length - 1 ? 0 : prev + 1));
+      // THE FIX: We just keep adding 1. We let onTransitionEnd handle the reset invisibly.
+      setCurrentIndex((prev) => prev + 1);
     }, 3000);
 
     return () => clearInterval(timer);
   }, [displayPhotos.length, isLoading, currentIndex, zoomedPhoto]);
 
-  // 4. Zoom controls
+  // 4. Zoom controls (Keep these exactly as they are)
   const openZoom = (photo) => {
     setZoomedPhoto(photo);
     window.history.pushState({ zoom: true }, '');
@@ -193,12 +194,26 @@ export default function Home() {
 
   // 5. Manual Slider Controls
   const slideLeft = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => (prev === 0 ? displayPhotos.length - 1 : prev - 1));
+    if (currentIndex === 0) {
+      // THE FIX: If at the start, teleport to the end clone silently, then slide left
+      setIsTransitioning(false);
+      setCurrentIndex(displayPhotos.length);
+      
+      // We use a tiny 50ms delay to let React render the teleport before sliding
+      setTimeout(() => {
+        setIsTransitioning(true);
+        setCurrentIndex(displayPhotos.length - 1);
+      }, 50);
+    } else {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev - 1);
+    }
   };
+
   const slideRight = () => {
+    if (currentIndex >= displayPhotos.length) return; // Prevents spam-clicking past the clones
     setIsTransitioning(true);
-    setCurrentIndex((prev) => (prev === displayPhotos.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => prev + 1); 
   };
 
   return (
