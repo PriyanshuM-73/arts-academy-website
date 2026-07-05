@@ -77,24 +77,27 @@ export default function FineArtsPage() {
              </div>
           </div>
 
+          {/* THE FIX: Mobile Responsive Carousel Width */}
           <div className="overflow-hidden relative w-full rounded-xl bg-gray-50/50 border border-gray-100 p-2">
             <div 
-              className={`flex ${isTransitioning ? 'transition-transform duration-1000 ease-in-out' : ''}`}
-              style={{ transform: `translateX(-${currentIndex * 50}%)` }}
+              className={`flex [--slide-width:100%] md:[--slide-width:50%] ${isTransitioning ? 'transition-transform duration-1000 ease-in-out' : ''}`}
+              style={{ transform: `translateX(calc(-${currentIndex} * var(--slide-width)))` }}
               onTransitionEnd={handleTransitionEnd}
             >
                {extendedPhotos.map((photo, index) => (
-                 <div key={index} className="w-1/2 shrink-0 px-2">
-                   <img src={photo} className="w-full h-48 md:h-72 object-cover rounded-lg shadow-sm" alt={`Class snapshot ${index + 1}`} />
+                 <div key={index} className="w-(--slide-width) shrink-0 px-2">
+                   <img src={photo} className="w-full h-64 md:h-72 object-cover rounded-lg shadow-sm" alt={`Class snapshot ${index + 1}`} />
                  </div>
                ))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-start gap-20 max-w-5xl mx-auto py-12">
+        {/* THE FIX: Teacher/Sticker Layout restructured for mobile */}
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-12 md:gap-20 max-w-5xl mx-auto py-12">
+          
           <div className="flex flex-col items-center md:items-start w-full md:w-1/3">
-            <div className="w-56 aspect-3/4 overflow-hidden border-4 border-amber-50 shadow-md rounded-lg mb-12">
+            <div className="w-56 aspect-3/4 overflow-hidden border-4 border-amber-50 shadow-md rounded-lg mb-6">
               <img src="/At.jpeg" alt="Teacher" className="w-full h-full object-cover" />
             </div>
             <div className="text-center md:text-left">
@@ -103,11 +106,13 @@ export default function FineArtsPage() {
             </div>
           </div>
 
-          <div className="flex-1 w-full relative">
-            <div className="absolute top-0 right-0 w-64 md:w-80 rotate-3 hover:rotate-0 transition-transform duration-500 ease-out cursor-pointer">
+          {/* THE FIX: Removed Absolute positioning so it sits naturally above the button on phones */}
+          <div className="flex-1 w-full flex justify-center md:justify-end items-center mt-8 md:mt-0 relative z-0">
+            <div className="w-64 md:w-80 rotate-3 hover:rotate-0 transition-transform duration-500 ease-out cursor-pointer">
               <img src="/Ast.jpeg" alt="Instrument Sticker" className="w-full h-auto drop-shadow-xl" />
             </div>
           </div>
+          
         </div>
       </div>
       
