@@ -109,33 +109,26 @@ export default function Home() {
     "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058981/_DSC1019_rinfq1.jpg"
   ];
 
-// --- GALLERY DATA & LOGIC ---
+// ALL STATES RESTORED
   const [displayPhotos, setDisplayPhotos] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0); 
   const [isLoading, setIsLoading] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(true); 
+  const [zoomedPhoto, setZoomedPhoto] = useState(null);
 
+  // 1. Preload and setup photos
   useEffect(() => {
     const savedIndex = localStorage.getItem('annualCarouselBookmark');
     const startIndex = savedIndex ? parseInt(savedIndex, 10) : 0;
 
     const selected = [];
     if (annualPhotos && annualPhotos.length > 0) {
-      // 1. Changed from 24 to 14 total photos
-      for (let i = 0; i < 14; i++) {
+      for (let i = 0; i < 14 && i < annualPhotos.length; i++) {
         selected.push(annualPhotos[(startIndex + i) % annualPhotos.length]);
       }
-    }
-
-    if (annualPhotos && annualPhotos.length > 0) {
-      // 2. Jump the bookmark by 14 for the next visit
       const nextStartIndex = (startIndex + 12) % annualPhotos.length;
       localStorage.setItem('annualCarouselBookmark', nextStartIndex.toString());
     }
-
-    // 3. Split the workload: Block screen for the first 4 photos
-    const initialBatch = selected.slice(0, 2); 
-    const backgroundBatch = selected.slice(2); // The remaining 10 photos
 
     const preloadAllImages = (imageUrls) => {
       return Promise.all(
@@ -152,34 +145,85 @@ export default function Home() {
 
     if (selected.length > 0) {
       Promise.all([
-        preloadAllImages(initialBatch), 
+        preloadAllImages(selected.slice(0, 2)), 
         new Promise((resolve) => setTimeout(resolve, 3000)) 
       ]).then(() => {
         setDisplayPhotos(selected);
         setIsLoading(false); 
-        
-        // 4. Silently download the remaining 10 photos in the background
-        preloadAllImages(backgroundBatch);
+        preloadAllImages(selected.slice(2));
       });
     }
   }, []); 
 
-  // 5. The 3-Second Infinite Timer (1 Photo at a time)
+  // 2. Handle Mobile Back Button for the Zoom Modal
   useEffect(() => {
-    if (displayPhotos.length === 0 || isLoading) return;
+    const handlePopState = () => {
+      if (zoomedPhoto) {
+        setZoomedPhoto(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [zoomedPhoto]);
 
-    const photoTimer = setInterval(() => {
-      setIsTransitioning(true); 
-      // THE FIX: Move strictly by 1 index every tick
-      setCurrentIndex((prev) => prev + 1); 
-    }, 3000); // Waits exactly 3 seconds before moving
+  // 3. SMART TIMER: Auto-scrolls, but resets on manual clicks and pauses when zoomed
+  useEffect(() => {
+    if (displayPhotos.length === 0 || isLoading || zoomedPhoto) return;
 
-    return () => clearInterval(photoTimer);
-  }, [displayPhotos, isLoading]);
+    const timer = setInterval(() => {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => (prev === displayPhotos.length - 1 ? 0 : prev + 1));
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [displayPhotos.length, isLoading, currentIndex, zoomedPhoto]);
+
+  // 4. Zoom controls
+  const openZoom = (photo) => {
+    setZoomedPhoto(photo);
+    window.history.pushState({ zoom: true }, '');
+  };
+
+  const closeZoom = () => {
+    setZoomedPhoto(null);
+    if (window.history.state && window.history.state.zoom) {
+      window.history.back();
+    }
+  };
+
+  // 5. Manual Slider Controls
+  const slideLeft = () => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev === 0 ? displayPhotos.length - 1 : prev - 1));
+  };
+  const slideRight = () => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev === displayPhotos.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <main className="min-h-screen bg-purple-500/20 relative">
       
+      {/* Zoom Lightbox Modal */}
+      {zoomedPhoto && (
+        <div 
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/95 p-4 cursor-pointer backdrop-blur-sm transition-opacity"
+          onClick={closeZoom}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white text-4xl hover:text-amber-500 transition-colors z-101"
+            onClick={(e) => { e.stopPropagation(); closeZoom(); }}
+          >
+            ×
+          </button>
+          <img 
+            src={zoomedPhoto} 
+            alt="Zoomed Event" 
+            className="max-w-full max-h-[90vh] object-contain rounded-md shadow-2xl" 
+          />
+        </div>
+      )}
+
       {/* --- CUSTOM PIANO KEY ANIMATION STYLES --- */}
       <style>{`
         @keyframes pressWhite {
@@ -203,40 +247,20 @@ export default function Home() {
       {/* --- FULL-SCREEN LOADING OVERLAY --- */}
       {isLoading && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-50">
-          
           <div className="flex items-start justify-center px-4">
             {[
-              { type: 'w', delay: 0 },
-              { type: 'b', delay: 0.2 },
-              { type: 'w', delay: 0.4 },
-              { type: 'b', delay: 0.6 },
-              { type: 'w', delay: 0.8 },
-              { type: 'w', delay: 1.0 },
-              { type: 'b', delay: 1.2 },
-              { type: 'w', delay: 1.4 },
-              { type: 'b', delay: 1.6 },
-              { type: 'w', delay: 1.8 },
-              { type: 'b', delay: 2.0 },
-              { type: 'w', delay: 2.2 },
+              { type: 'w', delay: 0 }, { type: 'b', delay: 0.2 }, { type: 'w', delay: 0.4 },
+              { type: 'b', delay: 0.6 }, { type: 'w', delay: 0.8 }, { type: 'w', delay: 1.0 },
+              { type: 'b', delay: 1.2 }, { type: 'w', delay: 1.4 }, { type: 'b', delay: 1.6 },
+              { type: 'w', delay: 1.8 }, { type: 'b', delay: 2.0 }, { type: 'w', delay: 2.2 },
             ].map((key, i) => (
               key.type === 'w' ? (
-                // White Key
-                <div 
-                  key={i} 
-                  className="w-8 md:w-12 h-32 md:h-48 border border-gray-300 rounded-b-md z-0 animate-white"
-                  style={{ animationDelay: `${key.delay}s` }}
-                ></div>
+                <div key={i} className="w-8 md:w-12 h-32 md:h-48 border border-gray-300 rounded-b-md z-0 animate-white" style={{ animationDelay: `${key.delay}s` }}></div>
               ) : (
-                // Black Key (Uses negative margins to overlap the white keys)
-                <div 
-                  key={i} 
-                  className="w-5 md:w-7 h-20 md:h-32 rounded-b-sm z-10 -mx-2.5 md:-mx-3.5 animate-black shadow-md"
-                  style={{ animationDelay: `${key.delay}s` }}
-                ></div>
+                <div key={i} className="w-5 md:w-7 h-20 md:h-32 rounded-b-sm z-10 -mx-2.5 md:-mx-3.5 animate-black shadow-md" style={{ animationDelay: `${key.delay}s` }}></div>
               )
             ))}
           </div>
-
           <p className="mt-16 text-gray-800 font-bold tracking-widest uppercase text-sm animate-pulse">
             Tuning Instruments...
           </p>
@@ -244,46 +268,24 @@ export default function Home() {
       )}
       
       {/* 1. HERO SECTION */}
-      {/* THE HERO SECTION WRAPPER */}
-        
-        {/* THE FIX: Changed md:min-h-screen to md:min-h-[70vh] */}
-      {/* This makes the box shorter on laptops, which stops the browser from zooming in so hard! */}
-      {/* THE HERO SECTION WRAPPER */}
       <div className="relative w-full min-h-[60vh] md:min-h-screen flex items-center justify-center bg-gray-900">
-        
-        {/* 1. The Background Photo */}
-        <Image 
-          src="/home_bg.JPG" 
-          alt="Sri Siddhi Academy Stage"
-          fill
-          priority 
-          fetchPriority="high" 
-          quality={75} 
-          className="object-cover object-center z-0" 
-        />
-
-        {/* 2. THE OG ORANGE/GOLD OVERLAY */}
-        {/* We use a rich gradient from orange to amber with a 60% opacity so it glows but text remains readable */}
+        <Image src="/home_bg.JPG" alt="Sri Siddhi Academy Stage" fill priority fetchPriority="high" quality={75} className="object-cover object-center z-0" />
         <div className="absolute inset-0 bg-linear-to-br from-orange-700/40 to-amber-500/40 z-1"></div>
-
-        {/* 3. Your Website Text */}
-        <div className="relative z-10 flex flex-col items-center text-center px-4 w-full translate-y-16 md:translate-y-18">
-          
+        <div className="relative z-10 flex flex-col items-center text-center px-4 w-full translate-y-16 md:translate-y-30">
           <h1 className="text-4xl md:text-6xl font-extrabold text-blue-100 drop-shadow-[0_0_20px_rgba(29,78,216,1)] z-10 relative">
-  Sri Siddhi Academy of Art
-</h1>          
+            Sri Siddhi Academy of Art
+          </h1>          
           <p className="text-base md:text-xl text-gray-100 mb-8 max-w-2xl drop-shadow-md">
             Nurturing talent across Music, Dance, Tabla, and Fine Arts.
           </p>          
         </div>
-        
       </div>
 
       {/* 2. EXPLORE ART FORMS SECTION */}
       <section className="py-20 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-green-500 mb-4">Explore Our Art Forms</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Explore Our Art Forms</h2>
             <div className="w-24 h-1 bg-amber-700 mx-auto rounded"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -293,7 +295,7 @@ export default function Home() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Classical Music</h3>
-                <p className="text-gray-600 mb-4 text-sm">Vocal training rooted from classical curriculum . Progress systematically through the Visharad syllabus.</p>
+                <p className="text-gray-600 mb-4 text-sm">Vocal training rooted from classical curriculum. Progress systematically through the Visharad syllabus.</p>
                 <span className="text-amber-700 font-semibold text-sm group-hover:text-amber-800 flex items-center">
                   Explore Curriculum <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
                 </span>
@@ -340,12 +342,11 @@ export default function Home() {
       </section>
 
       {/* 3. NOTICE BOARD */}
-      {/* THE FIX: Removed bg-stone-100 here to let purple show through */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-orange-500 mb-4">Announcements</h2>
-            <p className="text-yellow-500">Stay updated with the latest events, exams, and other notices.</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Announcements</h2>
+            <p className="text-gray-600">Stay updated with the latest events, exams, and other notices.</p>
           </div>
           <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="flex flex-col sm:flex-row border-b border-gray-100 p-6 hover:bg-gray-50 transition">
@@ -372,25 +373,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- DYNAMIC ANNUAL FUNCTION GALLERY CAROUSEL --- */}
-      {/* THE FIX: Removed bg-white here to let purple show through */}
+      {/* DYNAMIC ANNUAL FUNCTION GALLERY CAROUSEL (HYBRID) */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 relative">
           
-          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-cyan-400 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-gray-900 tracking-tight">
             Annual Function Glimpses
           </h2>
           
-          {/* THE CAROUSEL CONTAINER */}
-          {/* THE CAROUSEL CONTAINER */}
-          <div className="overflow-hidden relative w-full">
+          <div className="overflow-hidden relative w-full group">
             
-            {/* THE SLIDING TRACK */}
-            {/* THE SLIDING TRACK */}
+            {/* Left/Right Navigation Arrows */}
+            {!isLoading && displayPhotos.length > 0 && (
+              <>
+                <button 
+                  onClick={slideLeft} 
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full shadow-lg opacity-80 group-hover:opacity-100 transition-all text-xl font-bold"
+                >
+                  ❮
+                </button>
+                <button 
+                  onClick={slideRight} 
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full shadow-lg opacity-80 group-hover:opacity-100 transition-all text-xl font-bold"
+                >
+                  ❯
+                </button>
+              </>
+            )}
+
             <div 
               className="flex [--slide-width:100%] md:[--slide-width:50%]"
               style={{ 
-                // Because index moves by 1, it slides exactly 1 slide-width per tick!
                 transform: `translateX(calc(-${currentIndex} * var(--slide-width)))`,
                 transition: isTransitioning ? 'transform 700ms ease-in-out' : 'none' 
               }}
@@ -404,23 +417,22 @@ export default function Home() {
               
               {!isLoading && displayPhotos.length > 0 && 
                 [...displayPhotos, displayPhotos[0], displayPhotos[1]].map((photoUrl, index) => (
-                
-                // 3. Update the width constraint: w-full on phones, md:w-1/2 on desktop
-                <div key={index} className="w-full md:w-1/2 shrink-0 px-2 md:px-3">
-                  <div className="relative w-full h-64 md:h-96">
+                <div key={index} className="w-(--slide-width) shrink-0 px-2 md:px-3">
+                  <div 
+                    className="relative w-full h-64 md:h-96 cursor-zoom-in"
+                    onClick={() => openZoom(photoUrl)}
+                  >
                     <Image 
                       src={photoUrl} 
                       alt={`Annual Function Image ${index + 1}`} 
                       fill
                       priority={index < 2} 
                       quality={75}
-                      className="object-cover rounded-xl shadow-md"
-                      // 4. Good practice: Tell Next.js about our new responsive sizing
+                      className="object-cover rounded-xl shadow-md hover:opacity-90 transition-opacity"
                       sizes="(max-width: 768px) 100vw, 50vw" 
                     />
                   </div>
                 </div>
-                
               ))}
               
             </div>
