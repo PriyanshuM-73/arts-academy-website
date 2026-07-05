@@ -146,7 +146,7 @@ export default function Home() {
     if (selected.length > 0) {
       Promise.all([
         preloadAllImages(selected.slice(0, 2)), 
-        new Promise((resolve) => setTimeout(resolve, 3000)) 
+        new Promise((resolve) => setTimeout(resolve, 1500)) 
       ]).then(() => {
         setDisplayPhotos(selected);
         setIsLoading(false); 
@@ -250,11 +250,11 @@ export default function Home() {
           50% { transform: scaleY(0.92); background-color: #374151; }
         }
         .animate-white {
-          animation: pressWhite 2.8s infinite ease-in-out;
+          animation: pressWhite 1.2s infinite ease-in-out; /* Sped up from 2.8s */
           transform-origin: top;
         }
         .animate-black {
-          animation: pressBlack 2.8s infinite ease-in-out;
+          animation: pressBlack 1.2s infinite ease-in-out; /* Sped up from 2.8s */
           transform-origin: top;
         }
       `}</style>
@@ -264,10 +264,11 @@ export default function Home() {
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-50">
           <div className="flex items-start justify-center px-4">
             {[
-              { type: 'w', delay: 0 }, { type: 'b', delay: 0.2 }, { type: 'w', delay: 0.4 },
-              { type: 'b', delay: 0.6 }, { type: 'w', delay: 0.8 }, { type: 'w', delay: 1.0 },
-              { type: 'b', delay: 1.2 }, { type: 'w', delay: 1.4 }, { type: 'b', delay: 1.6 },
-              { type: 'w', delay: 1.8 }, { type: 'b', delay: 2.0 }, { type: 'w', delay: 2.2 },
+              /* Delays tightened from 0.2s gaps to 0.1s gaps for a faster wave */
+              { type: 'w', delay: 0 }, { type: 'b', delay: 0.1 }, { type: 'w', delay: 0.2 },
+              { type: 'b', delay: 0.3 }, { type: 'w', delay: 0.4 }, { type: 'w', delay: 0.5 },
+              { type: 'b', delay: 0.6 }, { type: 'w', delay: 0.7 }, { type: 'b', delay: 0.8 },
+              { type: 'w', delay: 0.9 }, { type: 'b', delay: 1.0 }, { type: 'w', delay: 1.1 },
             ].map((key, i) => (
               key.type === 'w' ? (
                 <div key={i} className="w-8 md:w-12 h-32 md:h-48 border border-gray-300 rounded-b-md z-0 animate-white" style={{ animationDelay: `${key.delay}s` }}></div>
