@@ -155,7 +155,10 @@ a {
 }
 
 .hover-lift {
-  transition: transform 250ms ease, box-shadow 250ms ease, filter 250ms ease;
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    filter 250ms ease;
 }
 
 .hover-lift:hover {

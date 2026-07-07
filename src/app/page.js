@@ -636,7 +636,7 @@ export default function Home() {
       {/* 5. ABOUT THE INSTITUTE & LOCATION */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="section-surface-strong overflow-hidden rounded-[2rem] p-6 md:p-10 lg:p-12 animate-fade-up">
+          <div className="section-surface-strong overflow-hidden rounded-[2rem] p-6 md:p-10 lg:p-12 animate-fade-up">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               {/* About & Affiliations */}
               <div>
