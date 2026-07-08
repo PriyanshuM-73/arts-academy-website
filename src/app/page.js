@@ -145,7 +145,7 @@ export default function Home() {
     if (selected.length > 0) {
       Promise.all([
         preloadAllImages(selected.slice(0, 2)),
-        new Promise((resolve) => setTimeout(resolve, 1500)),
+        new Promise((resolve) => setTimeout(resolve, 1999)),
       ]).then(() => {
         setDisplayPhotos(selected);
         setIsLoading(false);
@@ -154,7 +154,16 @@ export default function Home() {
     }
   }, []);
 
-  // 2. Handle Mobile Back Button for the Zoom Modal
+  // 2. Hide Navbar during loading (Bypasses Layout Stacking Contexts)
+  useEffect(() => {
+    const navbar = document.querySelector("nav");
+    if (navbar) {
+      // Hides the navbar completely if loading, otherwise removes the inline style to let it show normally
+      navbar.style.display = isLoading ? "none" : "";
+    }
+  }, [isLoading]);
+
+  // 3. Handle Mobile Back Button for the Zoom Modal
   useEffect(() => {
     const handlePopState = () => {
       if (zoomedPhoto) {
@@ -165,7 +174,7 @@ export default function Home() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, [zoomedPhoto]);
 
-  // 3. SMART TIMER: Auto-scrolls, but resets on manual clicks and pauses when zoomed
+  // 4. SMART TIMER: Auto-scrolls, but resets on manual clicks and pauses when zoomed
   useEffect(() => {
     if (displayPhotos.length === 0 || isLoading || zoomedPhoto) return;
 
@@ -178,7 +187,7 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [displayPhotos.length, isLoading, currentIndex, zoomedPhoto]);
 
-  // 4. Zoom controls (Keep these exactly as they are)
+  // 5. Zoom controls (Keep these exactly as they are)
   const openZoom = (photo) => {
     setZoomedPhoto(photo);
     window.history.pushState({ zoom: true }, "");
@@ -191,7 +200,7 @@ export default function Home() {
     }
   };
 
-  // 5. Manual Slider Controls
+  // 6. Manual Slider Controls
   const slideLeft = () => {
     if (currentIndex === 0) {
       // THE FIX: If at the start, teleport to the end clone silently, then slide left
@@ -251,33 +260,33 @@ export default function Home() {
           50% { transform: scaleY(0.92); background-color: #374151; }
         }
         .animate-white {
-          animation: pressWhite 1.2s infinite ease-in-out; /* Sped up from 2.8s */
+          animation: pressWhite 1.8s infinite ease-in-out; /* Sped up from 2.8s */
           transform-origin: top;
         }
         .animate-black {
-          animation: pressBlack 1.2s infinite ease-in-out; /* Sped up from 2.8s */
+          animation: pressBlack 1.8s infinite ease-in-out; /* Sped up from 2.8s */
           transform-origin: top;
         }
       `}</style>
 
       {/* --- FULL-SCREEN LOADING OVERLAY --- */}
       {isLoading && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-50">
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gray-50">
           <div className="flex items-start justify-center px-4">
             {[
               /* Delays tightened from 0.2s gaps to 0.1s gaps for a faster wave */
               { type: "w", delay: 0 },
-              { type: "b", delay: 0.1 },
-              { type: "w", delay: 0.2 },
-              { type: "b", delay: 0.3 },
-              { type: "w", delay: 0.4 },
-              { type: "w", delay: 0.5 },
-              { type: "b", delay: 0.6 },
-              { type: "w", delay: 0.7 },
-              { type: "b", delay: 0.8 },
-              { type: "w", delay: 0.9 },
-              { type: "b", delay: 1.0 },
-              { type: "w", delay: 1.1 },
+              { type: "b", delay: 0.15 },
+              { type: "w", delay: 0.3 },
+              { type: "b", delay: 0.45 },
+              { type: "w", delay: 0.6 },
+              { type: "w", delay: 0.75 },
+              { type: "b", delay: 0.90 },
+              { type: "w", delay: 1.05 },
+              { type: "b", delay: 1.2 },
+              { type: "w", delay: 1.35 },
+              { type: "b", delay: 1.5 },
+              { type: "w", delay: 1.65 },
             ].map((key, i) =>
               key.type === "w" ? (
                 <div
@@ -565,8 +574,7 @@ export default function Home() {
             Annual Function Glimpses
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-stone-600">
-            A visual archive of our performances, styled with a cleaner frame
-            and softer contrast.
+            A visual archive of our performances.
           </p>
 
           <div className="overflow-hidden relative w-full group animate-fade-up">
