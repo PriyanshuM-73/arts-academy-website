@@ -359,7 +359,7 @@ export default function Home() {
               ["4", "Art forms"],
               ["15+", "Years of training"],
               ["PKK", "Affiliated"],
-              ["RKL", "Rourkela"],
+              ["150+", "Students"],
             ].map(([value, label]) => (
               <div
                 key={label}
