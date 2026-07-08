@@ -311,16 +311,21 @@ export default function Home() {
 
         {/* 1. HERO SECTION */}
       <div className="relative flex min-h-[88vh] w-full items-center justify-center overflow-hidden bg-stone-950">
-        <Image
-          src="/home_bg.JPG"
-          alt="Sri Siddhi Academy Stage"
-          fill
-          priority
-          fetchPriority="high"
-          quality={80}
-          /* THE FIX: Replaced object-center with object-[center_20%] and added a negative Y translation */
-          className="object-cover object-[center_20%] -translate-y-4 md:-translate-y-10 z-0 scale-[1.08]"
-        />
+        
+        {/* THE FIX: We make the container 130% taller than the screen and pull it up into the negative space. 
+            This forces the center of the image to sit much higher behind your typography on all devices. */}
+        <div className="absolute left-0 right-0 z-0 h-[130%] -top-[15%] sm:-top-[20%] md:h-[140%] md:-top-[25%]">
+          <Image
+            src="/home_bg.JPG"
+            alt="Sri Siddhi Academy Stage"
+            fill
+            priority
+            fetchPriority="high"
+            quality={80}
+            className="object-cover object-center"
+          />
+        </div>
+        
         <div className="absolute inset-0 bg-gradient-to-br from-stone-950/84 via-stone-900/62 to-amber-950/42 z-[1]"></div>
         <div className="absolute inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-stone-950/85 to-transparent"></div>
         <div className="absolute left-1/2 top-24 z-[2] h-64 w-64 -translate-x-1/2 rounded-full bg-amber-500/18 blur-3xl"></div>
@@ -352,7 +357,7 @@ export default function Home() {
           <div className="mt-12 grid w-full max-w-4xl grid-cols-2 gap-3 md:grid-cols-4">
             {[
               ["4", "Art forms"],
-              ["20+", "Years of training"],
+              ["15+", "Years of training"],
               ["PKK", "Affiliated"],
               ["RKL", "Rourkela"],
             ].map(([value, label]) => (
