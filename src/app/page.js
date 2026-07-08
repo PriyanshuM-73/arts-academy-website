@@ -309,7 +309,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* 1. HERO SECTION */}
+        {/* 1. HERO SECTION */}
       <div className="relative flex min-h-[88vh] w-full items-center justify-center overflow-hidden bg-stone-950">
         <Image
           src="/home_bg.JPG"
@@ -318,7 +318,8 @@ export default function Home() {
           priority
           fetchPriority="high"
           quality={80}
-          className="object-cover object-center z-0 scale-105"
+          /* THE FIX: Replaced object-center with object-[center_20%] and added a negative Y translation */
+          className="object-cover object-[center_20%] -translate-y-4 md:-translate-y-10 z-0 scale-[1.08]"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-stone-950/84 via-stone-900/62 to-amber-950/42 z-[1]"></div>
         <div className="absolute inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-stone-950/85 to-transparent"></div>
@@ -642,7 +643,7 @@ export default function Home() {
       </section>
 
       {/* 5. ABOUT THE INSTITUTE & LOCATION */}
-      <section className="py-20">
+      <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="section-surface-strong overflow-hidden rounded-[2rem] p-6 md:p-10 lg:p-12 animate-fade-up">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
