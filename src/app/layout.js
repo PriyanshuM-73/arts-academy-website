@@ -1,7 +1,7 @@
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Footer from "../components/footer";
 
 const sans = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const display = Cormorant_Garamond({
