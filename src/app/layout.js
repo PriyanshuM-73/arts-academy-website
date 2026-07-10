@@ -3,7 +3,11 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const sans = Manrope({ subsets: ["latin"], variable: "--font-sans" });
+const sans = Manrope({ 
+  subsets: ["latin"], 
+  variable: "--font-sans" 
+});
+
 const display = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
@@ -12,8 +16,7 @@ const display = Cormorant_Garamond({
 
 export const metadata = {
   title: "Sri Siddhi Academy of Art",
-  description:
-    "Classical music, dance, tabla, and fine arts training in Rourkela.",
+  description: "Classical music, dance, tabla, and fine arts training in Rourkela.",
 };
 
 export default function RootLayout({ children }) {
@@ -25,7 +28,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         {children}
-      <Footer />
+        <Footer />
       </body>
     </html>
   );
