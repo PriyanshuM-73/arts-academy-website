@@ -19,20 +19,28 @@ export default function Navbar() {
   const isCollapsed = !isHomePage || isScrolled;
 
   // Track scrolling to trigger the collapse on the homepage
+  // --- REPLACE YOUR SCROLL useEffect WITH THIS EXACT BLOCK ---
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 150) {
+      // Calculates exactly 15% of the user's screen height
+      const triggerPoint = window.innerHeight * 0.15;
+      
+      if (window.scrollY > triggerPoint) {
         setIsScrolled(true);
-        setIsMobileMenuOpen(false); // Auto-close original mobile menu if scrolling down
+        setIsMobileMenuOpen(false);
       } else {
         setIsScrolled(false);
         setIsScrolledMenuOpen(false);
         setCoursesOpen(false);
       }
     };
+    
+    handleScroll();
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
 
   // Close menus when clicking outside
   useEffect(() => {

@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
+let memoryCache = null; 
+let isStrictLoading = false;
+
 export default function Home() {
   // --- GALLERY DATA & LOGIC ---
 
@@ -116,7 +119,17 @@ export default function Home() {
   const [zoomedPhoto, setZoomedPhoto] = useState(null);
 
   // 1. Preload and setup photos
+  // --- REPLACE YOUR FIRST useEffect WITH THIS EXACT BLOCK ---
   useEffect(() => {
+    if (memoryCache) {
+      setDisplayPhotos(memoryCache);
+      setIsLoading(false);
+      return; 
+    }
+
+    if (isStrictLoading) return;
+    isStrictLoading = true;
+
     const savedIndex = localStorage.getItem("annualCarouselBookmark");
     const startIndex = savedIndex ? parseInt(savedIndex, 10) : 0;
 
@@ -128,6 +141,8 @@ export default function Home() {
       const nextStartIndex = (startIndex + 12) % annualPhotos.length;
       localStorage.setItem("annualCarouselBookmark", nextStartIndex.toString());
     }
+
+    memoryCache = selected;
 
     const preloadAllImages = (imageUrls) => {
       return Promise.all(
@@ -145,7 +160,7 @@ export default function Home() {
     if (selected.length > 0) {
       Promise.all([
         preloadAllImages(selected.slice(0, 2)),
-        new Promise((resolve) => setTimeout(resolve, 1999)),
+        new Promise((resolve) => setTimeout(resolve, 2000)),
       ]).then(() => {
         setDisplayPhotos(selected);
         setIsLoading(false);
@@ -153,6 +168,7 @@ export default function Home() {
       });
     }
   }, []);
+
 
   // 2. Hide Navbar during loading (Bypasses Layout Stacking Contexts)
   useEffect(() => {
