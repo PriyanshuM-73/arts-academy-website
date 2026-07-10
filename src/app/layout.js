@@ -1,5 +1,6 @@
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const sans = Manrope({ 
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
         className={`${sans.variable} ${display.variable} antialiased`}
         suppressHydrationWarning
       >
+        <Navbar />
         {children}
+
         <Footer />
       </body>
     </html>
