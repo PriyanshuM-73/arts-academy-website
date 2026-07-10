@@ -1,24 +1,29 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Automatically updates the year if the site is still active past 2029
   const currentYear = new Date().getFullYear();
   const endYear = currentYear > 2029 ? currentYear : 2029;
 
   return (
-    <footer className="relative z-40 w-full overflow-hidden bg-[#E5DCCB]">
-      {/* Top Maroon Strip */}
-      <div className="h-5 w-full bg-[#6a2520] md:h-6"></div>
-
+    <footer className="relative z-40 w-full overflow-hidden bg-[#dcd3c3]">
       <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-center px-4 py-10 md:py-12">
+        
         {/* Text Content */}
         <div className="space-y-2 pr-16 text-center md:pr-0">
           <p className="font-serif text-[15px] italic tracking-wide text-stone-900 md:text-xl">
-            Copyright © 2026-2029 <span className="font-semibold text-[#6a2520]">Sri Siddhi Academy of Art</span> | Site
+            Copyright © 2026-{endYear}{" "}
+            <Link 
+              href="/" 
+              className="font-semibold text-[#6a2520] transition-colors hover:text-[#e13838]"
+            >
+              Sri Siddhi Academy of Art
+            </Link>
           </p>
           <p className="font-serif text-[15px] italic tracking-wide text-stone-900 md:text-xl">
             Created & Maintained by <span className="font-semibold">Priyanshu Mangal & SSAA IT Team</span>
