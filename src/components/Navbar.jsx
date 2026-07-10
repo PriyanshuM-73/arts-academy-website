@@ -22,8 +22,8 @@ export default function Navbar() {
   // --- REPLACE YOUR SCROLL useEffect WITH THIS EXACT BLOCK ---
   useEffect(() => {
     const handleScroll = () => {
-      // Calculates exactly 15% of the user's screen height
-      const triggerPoint = window.innerHeight * 0.15;
+      // THE FIX: Triggers instantly after scrolling down just 40 pixels
+      const triggerPoint = 40; 
       
       if (window.scrollY > triggerPoint) {
         setIsScrolled(true);

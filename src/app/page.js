@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
@@ -287,7 +288,7 @@ export default function Home() {
 
       {/* --- FULL-SCREEN LOADING OVERLAY --- */}
       {isLoading && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gray-50">
+        <div className="fixed inset-0 flex flex-col items-center justify-center bg-white">
           <div className="flex items-start justify-center px-4">
             {[
               /* Delays tightened from 0.2s gaps to 0.1s gaps for a faster wave */
@@ -325,6 +326,7 @@ export default function Home() {
         </div>
       )}
 
+       <Navbar />
         {/* 1. HERO SECTION */}
       <div className="relative flex min-h-[88vh] w-full items-center justify-center overflow-hidden bg-stone-950">
         
