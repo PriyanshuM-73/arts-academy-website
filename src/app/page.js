@@ -256,7 +256,7 @@ export default function Home() {
             fill
             priority
             fetchPriority="high"
-            quality={80}
+            quality={75}
             className="object-cover object-center"
           />
         </div>
@@ -294,7 +294,7 @@ export default function Home() {
               ["4", "Art forms"],
               ["15+", "Years of training"],
               ["PKK", "Affiliated"],
-              ["150+", "Students"],
+              ["100+", "Students"],
             ].map(([value, label]) => (
               <div
                 key={label}
@@ -581,7 +581,14 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+<div className="flex justify-center mt-12 mb-16">
+  <Link 
+    href="/archives" 
+    className="px-8 py-3 bg-amber-600 text-white rounded-full font-medium shadow-md hover:bg-amber-800 hover:shadow-lg transition-all"
+  >
+    Watch our Past Performances
+  </Link>
+</div>
       {/* 5. ABOUT THE INSTITUTE & LOCATION */}
       <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
