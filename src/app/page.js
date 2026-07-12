@@ -11,105 +11,7 @@ export default function Home() {
   // --- GALLERY DATA & LOGIC ---
 
   // Photo Pool (You can add 100+ photos here safely now!)
-  const annualPhotos = [
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060864/405_ntdaph.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783061306/395_blqvwk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060854/387_acf45s.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060853/393_tm0f2x.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060850/386_ygika4.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060841/380_oh0ycj.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060840/383_ndlcdb.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060834/377_liling.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060830/375_cyvc5q.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060827/367_jjuzxy.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060818/371_qrgk2d.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060814/225_j4tsin.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060811/358_bbawog.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060803/324_naskgb.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060801/321_rbef82.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060799/346_z0dovg.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060798/338_uh6x9r.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060790/209_f9earj.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060789/132_qfctrf.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060787/129_irnm7n.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060781/128_qamuqg.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060777/125_lrtinz.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060776/120_ceunee.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060772/114_nra5ra.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060762/112_kulacx.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060759/103_otvaoa.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060752/97_rfjyo3.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060752/96_xyopna.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060749/102_wycxaz.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060747/95_guux3g.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060738/86_kmvanp.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060733/82_zoxofa.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060731/80_pzqzfa.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060729/84_ccbwlw.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060728/81_oto7uq.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060727/78_jjtx7p.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060714/77_k7r8x1.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060710/61_t3gcty.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060708/64_vqrzdb.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060705/62_yqdqgk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060704/74_dtm0ik.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060703/71_k9wh0v.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060692/43_klp21i.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060688/39_l7ael8.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060686/28_vn4ugl.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060683/13_rxyysd.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060682/18_rnuji7.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060681/30_dfdh3y.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783060668/33_mrxrvh.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059164/_DSC1341_shi8rk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059155/_DSC1328_ykrnz9.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059143/_DSC1311_vlvomk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059138/_DSC1315_sygvnw.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059137/_DSC1308_c9pbhq.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059137/_DSC1312_yudkph.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059133/_DSC1307_ei2wzc.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059128/_DSC1303_oajcfc.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059113/_DSC1300_oq6sal.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059113/_DSC1302_qjc8uf.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059111/_DSC1293_v622qm.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059108/_DSC1290_wbmvwo.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059107/_DSC1298_ohuwxm.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059102/_DSC1291_wabt5i.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059095/_DSC1287_yqc6sm.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059087/_DSC1239_fb7sve.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059082/_DSC1215_eczyjz.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059081/_DSC1283_qaq4ty.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059079/_DSC1210_qlphas.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059076/_DSC1208_e4tf7c.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059067/_DSC1194_lkpcnl.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059065/_DSC1197_cemwop.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059062/_DSC1184_gwshaf.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059059/_DSC1193_jn67dv.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059056/_DSC1181_e6p7rl.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059053/_DSC1178_z5f83g.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059045/_DSC1174_usrjov.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059039/_DSC1153_h78clo.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059035/_DSC1169_ivbaz2.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059034/_DSC1140_ft5myk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059032/_DSC1105_xs03jd.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059031/_DSC1120_vvnbre.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059028/_DSC1119_pbirbh.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059022/_DSC1084_yofh7q.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059020/_DSC1104_yutzcl.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059017/_DSC1078_rqedsi.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059016/_DSC1076_vsgjdj.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059011/_DSC1068_tqbtbo.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059011/_DSC1045_qqiw2i.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059008/_DSC1050_d8ps7u.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783059001/_DSC1012_f1gylk.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058997/_DSC1017_qdmtnt.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058995/_DSC1037_sg3oe1.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058990/_DSC1008_ghbhrx.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058987/_DSC1010_kwlsn0.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058986/_DSC1051_zrpyrw.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058983/_DSC1059_ka75ao.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783058981/_DSC1019_rinfq1.jpg",
-  ];
+
 
   // ALL STATES RESTORED
   const [displayPhotos, setDisplayPhotos] = useState([]);
@@ -121,52 +23,69 @@ export default function Home() {
   // 1. Preload and setup photos
   // --- REPLACE YOUR FIRST useEffect WITH THIS EXACT BLOCK ---
   useEffect(() => {
-    if (memoryCache) {
+    // If photos are already cached in memory, use them instantly
+    if (memoryCache && memoryCache.length > 0) {
       setDisplayPhotos(memoryCache);
       setIsLoading(false);
-      return; 
+      return;
     }
 
     if (isStrictLoading) return;
     isStrictLoading = true;
 
-    const savedIndex = localStorage.getItem("annualCarouselBookmark");
-    const startIndex = savedIndex ? parseInt(savedIndex, 10) : 0;
+    // Fetch the dynamic photos from your new API
+    const fetchPhotos = async () => {
+      try {
+        const response = await fetch("/api/photos");
+        const data = await response.json();
 
-    const selected = [];
-    if (annualPhotos && annualPhotos.length > 0) {
-      for (let i = 0; i < 14 && i < annualPhotos.length; i++) {
-        selected.push(annualPhotos[(startIndex + i) % annualPhotos.length]);
-      }
-      const nextStartIndex = (startIndex + 12) % annualPhotos.length;
-      localStorage.setItem("annualCarouselBookmark", nextStartIndex.toString());
-    }
+        if (data.photos && data.photos.length > 0) {
+          
+          // Bookmark logic to start the carousel where they left off
+          const savedIndex = localStorage.getItem("annualCarouselBookmark");
+          const startIndex = savedIndex ? parseInt(savedIndex, 10) : 0;
 
-    memoryCache = selected;
+          const selected = [];
+          for (let i = 0; i < 14 && i < data.photos.length; i++) {
+            selected.push(data.photos[(startIndex + i) % data.photos.length]);
+          }
+          
+          const nextStartIndex = (startIndex + 12) % data.photos.length;
+          localStorage.setItem("annualCarouselBookmark", nextStartIndex.toString());
 
-    const preloadAllImages = (imageUrls) => {
-      return Promise.all(
-        imageUrls.map((src) => {
-          return new Promise((resolve) => {
-            const img = new window.Image();
-            img.src = src;
-            img.onload = resolve;
-            img.onerror = resolve;
+          // Save to cache so it doesn't re-fetch if they navigate away and come back
+          memoryCache = selected;
+
+          // Preload the first two images for instant viewing, then show layout
+          const img1 = new window.Image(); img1.src = selected[0];
+          const img2 = new window.Image(); img2.src = selected[1];
+
+          Promise.all([
+            new Promise(res => { img1.onload = res; img1.onerror = res; }),
+            new Promise(res => { img2.onload = res; img2.onerror = res; }),
+            new Promise(res => setTimeout(res, 2000)) // Guarantee min 2s piano animation
+          ]).then(() => {
+            setDisplayPhotos(selected);
+            setIsLoading(false);
+            
+            // Preload the rest of the images silently in the background
+            selected.slice(2).forEach(src => {
+              const img = new window.Image();
+              img.src = src;
+            });
           });
-        }),
-      );
+
+        } else {
+          // Fallback if no photos are returned
+          setIsLoading(false); 
+        }
+      } catch (error) {
+        console.error("Failed to load Cloudinary photos:", error);
+        setIsLoading(false);
+      }
     };
 
-    if (selected.length > 0) {
-      Promise.all([
-        preloadAllImages(selected.slice(0, 2)),
-        new Promise((resolve) => setTimeout(resolve, 2000)),
-      ]).then(() => {
-        setDisplayPhotos(selected);
-        setIsLoading(false);
-        preloadAllImages(selected.slice(2));
-      });
-    }
+    fetchPhotos();
   }, []);
 
 

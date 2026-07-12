@@ -8,6 +8,9 @@ export default function MusicPage() {
     "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535327/Mcar3_p5bunv.jpg",
     "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535321/Mcar2_ppfb1f.jpg",
     "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535320/Mcar1_bxihd9.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866277/Mcar4_hcdndb.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866281/Mcar6_erouds.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866282/Mcar5_iwwupo.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];

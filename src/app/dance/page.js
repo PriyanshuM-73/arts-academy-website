@@ -7,6 +7,9 @@ export default function DancePage() {
     "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535319/Dcar3_frombv.jpg",
     "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535318/Dcar2_bbbvci.jpg",
     "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535317/Dcar1_ssd8ft.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866277/Dcar4_rqftzg.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866279/Dcar5_mp50oy.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866278/Dcar6_chz0pj.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];

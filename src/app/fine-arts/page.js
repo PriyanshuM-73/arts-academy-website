@@ -9,6 +9,7 @@ export default function FineArtsPage() {
     "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174708/Fcar3_smexmo.jpg",
     "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174710/Fcar4_vamlrx.jpg",
     "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174705/Fcar5_lteqds.jpg",
+    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866281/Fcar6_zqtrjh.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];
