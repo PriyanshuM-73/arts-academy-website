@@ -6,7 +6,7 @@ export default function ArchivesDirectory() {
 
   return (
     <div className="container mx-auto p-8 text-amber-500 min-h-screen flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-12">Annual Function Kighlights</h1>
+      <h1 className="text-4xl font-bold mb-12">Annual Function Highlights</h1>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl">
         {availableYears.map((year) => (
