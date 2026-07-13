@@ -5,12 +5,12 @@ import Image from "next/image";
 
 export default function MusicPage() {
   const classPhotos = [
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535327/Mcar3_p5bunv.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535321/Mcar2_ppfb1f.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535320/Mcar1_bxihd9.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866277/Mcar4_hcdndb.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866281/Mcar6_erouds.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866282/Mcar5_iwwupo.jpg"
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972057/Mcar3_fisfoa.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972057/Mcar2_bp3k6u.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972057/Mcar1_gugz2i.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972061/Mcar4_umhjuf.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972057/Mcar5_tlfjp9.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972058/Mcar6_knmgbt.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];

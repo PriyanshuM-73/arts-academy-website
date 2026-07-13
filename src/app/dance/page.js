@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 
 export default function DancePage() {
   const classPhotos = [
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535319/Dcar3_frombv.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535318/Dcar2_bbbvci.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1781535317/Dcar1_ssd8ft.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866277/Dcar4_rqftzg.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866279/Dcar5_mp50oy.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/q_auto/f_auto/v1783866278/Dcar6_chz0pj.jpg"
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972054/Dcar3_hjkmok.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972055/Dcar5_mqlmh1.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972056/Dcar2_lyvgur.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972055/Dcar4_wu2yey.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972054/Dcar6_ezhf5k.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972055/Dcar1_wqmjtf.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];

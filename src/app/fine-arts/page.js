@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 
 export default function FineArtsPage() {
   const classPhotos = [
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174706/Fcar1_zr86pn.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174711/Fcar2_dvks8t.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174708/Fcar3_smexmo.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174710/Fcar4_vamlrx.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783174705/Fcar5_lteqds.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866281/Fcar6_zqtrjh.jpg"
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972055/Fcar1_lwvswh.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972060/Fcar3_nwlz6o.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972056/Fcar5_bsgzjn.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972056/Fcar4_zheyq6.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972057/Fcar6_ild8bb.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972056/Fcar2_m2276l.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];

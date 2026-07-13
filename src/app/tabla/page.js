@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 
 export default function TablaPage() {
   const classPhotos = [
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866279/Tcar1_kpccbt.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866286/Tcar3_u2ghu1.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866290/Tcar4_lzonpa.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866286/Tcar2_wwpmfp.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866289/Tcar6_u47pya.jpg",
-    "https://res.cloudinary.com/dodlb9hdp/image/upload/v1783866290/Tcar5_oowhbr.jpg"
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972058/Tcar1_k4eza0.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972059/Tcar6_rxwqww.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972059/Tcar5_qmplhm.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972058/Tcar2_oomhod.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972058/Tcar3_fl0crv.jpg",
+    "https://res.cloudinary.com/tbvdoty6/image/upload/v1783972059/Tcar4_lxalsk.jpg"
   ];
 
   const extendedPhotos = [...classPhotos, classPhotos[0], classPhotos[1]];

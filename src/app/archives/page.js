@@ -1,8 +1,63 @@
+"use client";
+
+import { useState } from "react";
+
+// 1. We create a mini-component just for the player so each video remembers if it was clicked
+function CustomVideoPlayer({ video }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <div className="flex flex-col">
+      <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg mb-5 bg-gray-900">
+        
+        {!isPlaying ? (
+          // THE FAKE PLAYER (Shows before clicking)
+          <div 
+            className="absolute inset-0 cursor-pointer group"
+            onClick={() => setIsPlaying(true)}
+          >
+            {/* We automatically fetch the high-res thumbnail directly from YouTube's hidden database */}
+            <img 
+              src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`} 
+              alt={video.title}
+              className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            
+            {/* Our completely custom, non-YouTube Play Button */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 bg-[#d97706]/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#d97706] transition-all duration-300">
+                {/* CSS Triangle for the play icon */}
+                <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[16px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          // THE REAL YOUTUBE PLAYER (Loads and auto-plays after clicking)
+          <iframe
+            className="absolute top-0 left-0 w-full h-full"
+            // Notice we added autoplay=1 so it starts immediately when the fake player disappears
+            src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        )}
+
+      </div>
+      
+      {/* Video Title Beneath */}
+      <h3 className="text-xl font-medium text-gray-900 text-center px-2">
+        {video.title}
+      </h3>
+    </div>
+  );
+}
+
+// 2. The main page layout remains exactly the same
 export default function ArchivesPage() {
-  // You just swap out these IDs with your actual YouTube video IDs
   const videos2025 = [
     {
-      id: "dQw4w9WgXcQ", // The string of letters/numbers at the end of a YouTube URL
+      id: "dQw4w9WgXcQ", // The Rickroll
       title: "Opening Ceremony & Welcome Dance",
     },
     {
@@ -43,39 +98,17 @@ export default function ArchivesPage() {
 
         {/* 2025 Section */}
         <div className="mb-24">
-          {/* The Year Subheading */}
           <h2 className="text-3xl font-serif text-gray-800 border-b-2 border-[#d97706] pb-2 mb-10 inline-block">
             2025
           </h2>
 
-          {/* The Fixed 3-Column Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {/* Now we just call our custom player component for every video in the list */}
             {videos2025.map((video, index) => (
-              <div key={index} className="flex flex-col">
-                
-                {/* 16:9 Video Player Container */}
-                <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg mb-5 bg-gray-200">
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    // Adding ?rel=0 stops YouTube from showing random weird videos at the end
-                    src={`https://www.youtube.com/embed/${video.id}?rel=0`}
-                    title={video.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-                
-                {/* Video Title Beneath */}
-                <h3 className="text-xl font-medium text-gray-900 text-center px-2">
-                  {video.title}
-                </h3>
-                
-              </div>
+              <CustomVideoPlayer key={index} video={video} />
             ))}
           </div>
         </div>
-
-        {/* Future years (like 2024) can just be copy-pasted below this line! */}
 
       </div>
     </div>
