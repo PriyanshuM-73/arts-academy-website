@@ -188,7 +188,7 @@ export default function Navbar() {
             }}
             className="rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 transition-colors hover:bg-slate-900/5 hover:text-amber-700"
           >
-            SSAA
+            Home
           </Link>
 
           <div className="flex flex-col">

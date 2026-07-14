@@ -4,40 +4,34 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
+// 1. DATA CACHE: Remembers photos so we don't re-fetch on navigation
 let memoryCache = null; 
-let isStrictLoading = false;
+
+// 2. THE MAGIC FLAG: Remembers if the intro animation has played this session
+let hasInitialLoadCompleted = false; 
 
 export default function Home() {
   // --- GALLERY DATA & LOGIC ---
-
-  // Photo Pool (You can add 100+ photos here safely now!)
-
-
-  // ALL STATES RESTORED
   const [displayPhotos, setDisplayPhotos] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  // If the initial load completed earlier in this session, start isLoading as FALSE.
+  // This completely prevents the flash of the piano on return trips!
+  const [isLoading, setIsLoading] = useState(!hasInitialLoadCompleted);
+  
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [zoomedPhoto, setZoomedPhoto] = useState(null);
 
-  // 1. Preload and setup photos
-  // 1. Preload and setup photos
-  // --- REPLACE YOUR FIRST useEffect WITH THIS EXACT BLOCK ---
+  // --- 1. DATA FETCHING (Runs silently in the background) ---
   useEffect(() => {
-    if (isStrictLoading) return;
-    isStrictLoading = true;
-
-    // A strict 1.5-second timer that CANNOT be bypassed
-    const minimumTimer = new Promise((resolve) => setTimeout(resolve, 2000));
-
     const loadData = async () => {
-      try {
-        // If we have cache, use it, but DO NOT stop the loading screen yet
-        if (memoryCache && memoryCache.length > 0) {
-          setDisplayPhotos(memoryCache);
-          return; 
-        }
+      // If we already have photos, use them and stop
+      if (memoryCache && memoryCache.length > 0) {
+        setDisplayPhotos(memoryCache);
+        return; 
+      }
 
+      try {
         const response = await fetch("/api/photos");
         const data = await response.json();
 
@@ -52,16 +46,11 @@ export default function Home() {
           
           const nextStartIndex = (startIndex + 12) % data.photos.length;
           localStorage.setItem("annualCarouselBookmark", nextStartIndex.toString());
-          memoryCache = selected;
-
-          // Preload the first two images in the background
-          const img1 = new window.Image(); img1.src = selected[0];
-          const img2 = new window.Image(); img2.src = selected[1];
           
+          memoryCache = selected;
           setDisplayPhotos(selected);
 
-          // Preload the rest silently
-          selected.slice(2).forEach(src => {
+          selected.forEach(src => {
             const img = new window.Image();
             img.src = src;
           });
@@ -71,12 +60,21 @@ export default function Home() {
       }
     };
 
-    // MAGIC BULLET: Wait for BOTH the data to process AND the 1.5s timer to finish.
-    // The loader will never instantly vanish again!
-    Promise.all([loadData(), minimumTimer]).then(() => {
-      setIsLoading(false);
-    });
+    loadData();
+  }, []); // Only runs on mount
 
+  // --- 2. LOADING SCREEN LOGIC (Strictly independent) ---
+  useEffect(() => {
+    // If we've already done the intro this session, do absolutely nothing.
+    if (hasInitialLoadCompleted) return;
+
+    // Otherwise, start the 1.65s timer for the first visit
+    const introTimer = setTimeout(() => {
+      setIsLoading(false);
+      hasInitialLoadCompleted = true; // Permanently mark it as completed for this session!
+    }, 1650);
+
+    return () => clearTimeout(introTimer);
   }, []);
 
 

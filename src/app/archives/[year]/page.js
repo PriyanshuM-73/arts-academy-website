@@ -1,5 +1,5 @@
 // src/app/archives/[year]/page.js
-
+import VideoCard from "./VideoCard";
 // 1. THE DICTIONARY: Store your public playlist IDs right here!
 const PLAYLIST_MAP = {
   "2025": "PLPY_Lu5AIF1k", 
@@ -31,35 +31,34 @@ export default async function ArchiveYearPage({ params }) {
   // 1. FLIP THE ORDER: Create a reversed copy of the YouTube items
   const reversedVideos = data.items ? [...data.items].reverse() : [];
 
-  // 2. RENDER THE GALLERY
+
+  // 2. RENDER THE GALLERY (This is the second return statement at the bottom)
   return (
-    <div className="container mx-auto p-8 text-orange-400 min-h-screen">
+    <div className="container mx-auto p-8 text-orange-600 min-h-screen">
       <h1 className="text-4xl font-bold mb-10 text-center">{year} Annual Function</h1>
       
+      {/* Look for this specific grid line! */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* We map over our new reversed list instead of data.items */}
+        
         {reversedVideos.map((item) => {
           const video = item.snippet;
           const videoId = video.resourceId.videoId;
           
+          // Tries to grab the highest quality thumbnail available
+          const bestThumbnail = video.thumbnails?.maxres?.url 
+                             || video.thumbnails?.high?.url 
+                             || video.thumbnails?.medium?.url;
+          
           return (
-            <div key={item.id} className="flex flex-col group">
-              {/* The aspect-video class keeps the 16:9 ratio perfect */}
-              <div className="relative w-full aspect-video overflow-hidden rounded-xl shadow-lg border border-amber-500">
-                <iframe 
-                  className="absolute top-0 left-0 w-full h-full"
-                  src={`https://www.youtube.com/embed/${videoId}`} 
-                  title={video.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <h3 className="mt-4 text-xl font-semibold transition-colors">
-                {video.title}
-              </h3>
-            </div>
+            <VideoCard 
+              key={item.id}
+              videoId={videoId}
+              title={video.title}
+              thumbnail={bestThumbnail}
+            />
           );
         })}
+
       </div>
     </div>
   );
