@@ -4,6 +4,26 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
+const announcements = [
+  {
+    id: 1,
+    dayMonth: "25 July",
+    year: "2026",
+    title: "Rath Yatra Bhajan Sandhya",
+    description: "Watch our Institute students perform at Sector 3 Jagannath Mandir. Mandir.",
+    // link: "https://forms.gle/your-google-form-link-here",
+    // linkText: "Register Here"
+  },
+  {
+    id: 2,
+    dayMonth: "27 July",
+    year: "2026",
+    title: "Rath Yatra Bhajan Sandhya",
+    description: "Watch our Institute students perform at Maa Mangala Mandir, Sector 2.",
+    // link: "https://forms.gle/your-google-form-link-here",
+    // linkText: "Register Here"
+  }
+];
 // 1. DATA CACHE: Remembers photos so we don't re-fetch on navigation
 let memoryCache = null; 
 
@@ -461,35 +481,43 @@ export default function Home() {
             </p>
           </div>
           <div className="overflow-hidden rounded-[1.75rem] section-surface-strong">
-            <div className="flex flex-col border-b border-stone-200/70 p-6 transition hover:bg-stone-50 sm:flex-row">
-              <div className="sm:w-32 shrink-0 mb-4 sm:mb-0">
-                <div className="text-xl font-bold text-amber-800">25 July</div>
-                <div className="text-sm font-medium text-stone-500">2026</div>
+            {announcements.map((notice, index) => (
+              <div 
+                key={notice.id} 
+                className={`flex flex-col p-6 transition hover:bg-stone-50 sm:flex-row ${
+                  index !== announcements.length - 1 ? "border-b border-stone-200/70" : ""
+                }`}
+              >
+                <div className="sm:w-32 shrink-0 mb-4 sm:mb-0">
+                  <div className="text-xl font-bold text-amber-800">{notice.dayMonth}</div>
+                  <div className="text-sm font-medium text-stone-500">{notice.year}</div>
+                </div>
+                <div>
+                  <h3 className="mb-1 text-lg font-bold text-stone-900">
+                    {notice.title}
+                  </h3>
+                  <p className="text-stone-600">
+                    {notice.description}
+                  </p>
+                  
+                  {/* THE NEW CONDITIONAL LINK BUTTON */}
+                  {notice.link && (
+                    <a
+                      href={notice.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center text-sm font-bold text-amber-700 transition hover:text-amber-900 group"
+                    >
+                      {notice.linkText || "Learn More"} 
+                      <span className="ml-1 transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </a>
+                  )}
+                  
+                </div>
               </div>
-              <div>
-                <h3 className="mb-1 text-lg font-bold text-stone-900">
-                  Rath Yatra Bhajan Sandhya
-                </h3>
-                <p className="text-stone-600">
-                  Watch our Institute students perform at Sector 3 Jagannath Mandir.
-                  Mandir.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col p-6 transition hover:bg-stone-50 sm:flex-row">
-              <div className="sm:w-32 shrink-0 mb-4 sm:mb-0">
-                <div className="text-xl font-bold text-amber-800">27 July</div>
-                <div className="text-sm font-medium text-stone-500">2026</div>
-              </div>
-              <div>
-                <h3 className="mb-1 text-lg font-bold text-stone-900">
-                  Rath Yatra Bhajan Sandhya
-                </h3>
-                <p className="text-stone-600">
-                  Watch our Institute students perform at Maa Mangala Mandir, Sector 2.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
