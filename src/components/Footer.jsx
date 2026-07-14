@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="space-y-1.5 text-center font-sans tracking-wide text-stone-900">
           
           {/* Line 1: Copyright */}
-          <p className="whitespace-nowrap text-[15px] md:text-base">
+          <p className="whitespace-nowrap text-[17px] md:text-base">
             Copyright © 2026-{endYear}{" "}
             <Link 
               href="/" 
@@ -35,8 +35,8 @@ export default function Footer() {
           </p>
           
           {/* Line 2: Clean, short credit attribution */}
-          <p className="whitespace-nowrap text-[15px] md:text-base text-stone-700">
-            Developed by <span className="font-bold text-stone-900">Priyanshu Mangal & SSAA IT Team</span>
+          <p className="whitespace-nowrap text-[17px] md:text-base text-stone-700">
+            Developed by <span className="font-bold text-stone-900">SSAA IT Team</span>
           </p>
           
         </div>
