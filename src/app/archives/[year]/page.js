@@ -28,35 +28,36 @@ export default async function ArchiveYearPage({ params }) {
   const res = await fetch(url, { next: { revalidate: 3600 } });
   const data = await res.json();
 
-  // Render the gallery
+  // 1. FLIP THE ORDER: Create a reversed copy of the YouTube items
+  const reversedVideos = data.items ? [...data.items].reverse() : [];
+
+  // 2. RENDER THE GALLERY
   return (
-    <div className="container mx-auto p-8 text-orange-500 min-h-screen">
+    <div className="container mx-auto p-8 text-orange-400 min-h-screen">
       <h1 className="text-4xl font-bold mb-10 text-center">{year} Annual Function</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {data.items?.map((item) => {
+        {/* We map over our new reversed list instead of data.items */}
+        {reversedVideos.map((item) => {
           const video = item.snippet;
-          const videoUrl = `https://www.youtube.com/watch?v=${video.resourceId.videoId}`;
+          const videoId = video.resourceId.videoId;
           
           return (
-            <a 
-              key={item.id} 
-              href={videoUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block group"
-            >
-              <div className="overflow-hidden rounded-xl shadow-lg">
-                <img 
-                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
-                  src={video.thumbnails?.high?.url || video.thumbnails?.default?.url} 
-                  alt={video.title} 
-                />
+            <div key={item.id} className="flex flex-col group">
+              {/* The aspect-video class keeps the 16:9 ratio perfect */}
+              <div className="relative w-full aspect-video overflow-hidden rounded-xl shadow-lg border border-amber-500">
+                <iframe 
+                  className="absolute top-0 left-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${videoId}`} 
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
               </div>
-              <h3 className="mt-4 text-xl font-semibold group-hover:text-amber-500 transition-colors">
+              <h3 className="mt-4 text-xl font-semibold transition-colors">
                 {video.title}
               </h3>
-            </a>
+            </div>
           );
         })}
       </div>
