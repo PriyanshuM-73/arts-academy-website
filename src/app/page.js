@@ -463,7 +463,7 @@ export default function Home() {
           <div className="overflow-hidden rounded-[1.75rem] section-surface-strong">
             <div className="flex flex-col border-b border-stone-200/70 p-6 transition hover:bg-stone-50 sm:flex-row">
               <div className="sm:w-32 shrink-0 mb-4 sm:mb-0">
-                <div className="text-xl font-bold text-amber-800">17 July</div>
+                <div className="text-xl font-bold text-amber-800">25 July</div>
                 <div className="text-sm font-medium text-stone-500">2026</div>
               </div>
               <div>
@@ -471,14 +471,14 @@ export default function Home() {
                   Rath Yatra Bhajan Sandhya
                 </h3>
                 <p className="text-stone-600">
-                  Watch our Institute students perform at Sector-20 Gundicha
+                  Watch our Institute students perform at Sector 3 Jagannath Mandir.
                   Mandir.
                 </p>
               </div>
             </div>
             <div className="flex flex-col p-6 transition hover:bg-stone-50 sm:flex-row">
               <div className="sm:w-32 shrink-0 mb-4 sm:mb-0">
-                <div className="text-xl font-bold text-amber-800">23 July</div>
+                <div className="text-xl font-bold text-amber-800">27 July</div>
                 <div className="text-sm font-medium text-stone-500">2026</div>
               </div>
               <div>
@@ -486,8 +486,7 @@ export default function Home() {
                   Rath Yatra Bhajan Sandhya
                 </h3>
                 <p className="text-stone-600">
-                  Watch our Institute students perform at Maa Bata Mangala
-                  Mandir, Jagda.
+                  Watch our Institute students perform at Maa Mangala Mandir, Sector 2.
                 </p>
               </div>
             </div>
