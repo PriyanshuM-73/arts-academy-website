@@ -21,27 +21,27 @@ export default function Home() {
   const [zoomedPhoto, setZoomedPhoto] = useState(null);
 
   // 1. Preload and setup photos
+  // 1. Preload and setup photos
   // --- REPLACE YOUR FIRST useEffect WITH THIS EXACT BLOCK ---
   useEffect(() => {
-    // If photos are already cached in memory, use them instantly
-    if (memoryCache && memoryCache.length > 0) {
-      setDisplayPhotos(memoryCache);
-      setIsLoading(false);
-      return;
-    }
-
     if (isStrictLoading) return;
     isStrictLoading = true;
 
-    // Fetch the dynamic photos from your new API
-    const fetchPhotos = async () => {
+    // A strict 1.5-second timer that CANNOT be bypassed
+    const minimumTimer = new Promise((resolve) => setTimeout(resolve, 2000));
+
+    const loadData = async () => {
       try {
+        // If we have cache, use it, but DO NOT stop the loading screen yet
+        if (memoryCache && memoryCache.length > 0) {
+          setDisplayPhotos(memoryCache);
+          return; 
+        }
+
         const response = await fetch("/api/photos");
         const data = await response.json();
 
         if (data.photos && data.photos.length > 0) {
-          
-          // Bookmark logic to start the carousel where they left off
           const savedIndex = localStorage.getItem("annualCarouselBookmark");
           const startIndex = savedIndex ? parseInt(savedIndex, 10) : 0;
 
@@ -52,40 +52,31 @@ export default function Home() {
           
           const nextStartIndex = (startIndex + 12) % data.photos.length;
           localStorage.setItem("annualCarouselBookmark", nextStartIndex.toString());
-
-          // Save to cache so it doesn't re-fetch if they navigate away and come back
           memoryCache = selected;
 
-          // Preload the first two images for instant viewing, then show layout
+          // Preload the first two images in the background
           const img1 = new window.Image(); img1.src = selected[0];
           const img2 = new window.Image(); img2.src = selected[1];
+          
+          setDisplayPhotos(selected);
 
-          Promise.all([
-            new Promise(res => { img1.onload = res; img1.onerror = res; }),
-            new Promise(res => { img2.onload = res; img2.onerror = res; }),
-            new Promise(res => setTimeout(res, 2000)) // Guarantee min 2s piano animation
-          ]).then(() => {
-            setDisplayPhotos(selected);
-            setIsLoading(false);
-            
-            // Preload the rest of the images silently in the background
-            selected.slice(2).forEach(src => {
-              const img = new window.Image();
-              img.src = src;
-            });
+          // Preload the rest silently
+          selected.slice(2).forEach(src => {
+            const img = new window.Image();
+            img.src = src;
           });
-
-        } else {
-          // Fallback if no photos are returned
-          setIsLoading(false); 
         }
       } catch (error) {
-        console.error("Failed to load Cloudinary photos:", error);
-        setIsLoading(false);
+        console.error("Failed to load photos:", error);
       }
     };
 
-    fetchPhotos();
+    // MAGIC BULLET: Wait for BOTH the data to process AND the 1.5s timer to finish.
+    // The loader will never instantly vanish again!
+    Promise.all([loadData(), minimumTimer]).then(() => {
+      setIsLoading(false);
+    });
+
   }, []);
 
 
@@ -195,11 +186,11 @@ export default function Home() {
           50% { transform: scaleY(0.92); background-color: #374151; }
         }
         .animate-white {
-          animation: pressWhite 1.8s infinite ease-in-out; /* Sped up from 2.8s */
+          animation: pressWhite 1.8s infinite ease-in-out both; 
           transform-origin: top;
         }
         .animate-black {
-          animation: pressBlack 1.8s infinite ease-in-out; /* Sped up from 2.8s */
+          animation: pressBlack 1.8s infinite ease-in-out both; 
           transform-origin: top;
         }
       `}</style>
@@ -209,7 +200,6 @@ export default function Home() {
         <div className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-white">
           <div className="flex items-start justify-center px-4">
             {[
-              /* Delays tightened from 0.2s gaps to 0.1s gaps for a faster wave */
               { type: "w", delay: 0 },
               { type: "b", delay: 0.15 },
               { type: "w", delay: 0.3 },
@@ -226,20 +216,22 @@ export default function Home() {
               key.type === "w" ? (
                 <div
                   key={i}
-                  className="w-8 md:w-12 h-32 md:h-48 border border-gray-300 rounded-b-md z-0 animate-white"
+                  // Added bg-white here so it's solid before animating
+                  className="w-8 md:w-12 h-32 md:h-48 bg-white border border-gray-300 rounded-b-md z-0 animate-white"
                   style={{ animationDelay: `${key.delay}s` }}
                 ></div>
               ) : (
                 <div
                   key={i}
-                  className="w-5 md:w-7 h-20 md:h-32 rounded-b-sm z-10 -mx-2.5 md:-mx-3.5 animate-black shadow-md"
+                  // Added bg-gray-900 here so it doesn't pop in invisibly
+                  className="w-5 md:w-7 h-20 md:h-32 bg-gray-900 rounded-b-sm z-10 -mx-2.5 md:-mx-3.5 shadow-md origin-top animate-black"
                   style={{ animationDelay: `${key.delay}s` }}
                 ></div>
               ),
             )}
           </div>
           <p className="mt-16 text-gray-800 font-bold tracking-widest uppercase text-sm animate-pulse">
-            Tuning Instruments...
+            Tuning your Experience...
           </p>
         </div>
       )}
@@ -581,14 +573,16 @@ export default function Home() {
           </div>
         </div>
       </section>
-<div className="flex justify-center mt-12 mb-16">
-  <Link 
-    href="/archives" 
-    className="px-8 py-3 bg-amber-600 text-white rounded-full font-medium shadow-md hover:bg-amber-800 hover:shadow-lg transition-all"
-  >
-    Watch our Past Performances
-  </Link>
-</div>
+{/* Update the link above the "About the Institute" section */}
+      <div className="flex justify-center mt-12 mb-16">
+        <Link 
+          href="/archives" 
+          prefetch={true} // <-- This triggers the background loading magic!
+          className="px-8 py-3 bg-amber-600 text-white rounded-full font-medium shadow-md hover:bg-amber-800 hover:shadow-lg transition-all"
+        >
+          Watch our Past Performances
+        </Link>
+      </div>
       {/* 5. ABOUT THE INSTITUTE & LOCATION */}
       <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
