@@ -134,7 +134,7 @@ export default function FineArtsPage() {
             </div>
             <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold text-gray-900 mb-1">
-                Jyotsnarani Upadhyaya
+                Jyotsnarani Nanda
               </h3>
               <h4 className="text-amber-700 font-bold tracking-wide uppercase text-sm">
                 Fine Arts Teacher
