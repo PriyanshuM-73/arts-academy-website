@@ -64,29 +64,26 @@ export default function DancePage() {
                 II(PPI & PPII):
               </div>
               <div className="text-gray-700 leading-relaxed">
-                This starting level introduces beginners to the essential
-                foundations of Odissi dance. Students learn basic body postures
-                like Chouka and Tribhangi, primary footwork, simple rhythms, and
-                single-hand gestures.
+                This starting level introduces beginners to the essential foundations of Odissi dance. 
+                Students learn basic body postures like Chouka and Tribhangi, primary footwork in simple rhythms(taal), and hand gestures( hasta mudra).
               </div>
               <div className="text-gray-900 font-bold flex items-start gap-2 whitespace-nowrap">
                 <span className="text-rose-700">•</span> Bhusan (1st, 2nd and
                 3rd year):
               </div>
               <div className="text-gray-700 leading-relaxed">
-                This intermediate stage brings more depth and technical variety.
-                Students explore combined hand gestures, new rhythmic patterns,
-                and complex traditional dances like Batu and Pallavi.
+                This intermediate stage brings more depth and technical variety. 
+                Complex rhythmic patterns and two out of five parts of odissi dance which are Batu and Pallavi are introduced.
               </div>
               <div className="text-gray-900 font-bold flex items-start gap-2 whitespace-nowrap">
                 <span className="text-rose-700">•</span> Visharad I & II(4th and
                 5th year):
               </div>
               <div className="text-gray-700 leading-relaxed">
-                This advanced level focuses on achieving true artistic mastery.
-                It involves deep study of emotional expressions (Abhinaya)
-                across various Rasas, complex classical items, and dance-drama
-                compositions.
+                This advanced level focuses on achieving true artistic mastery. 
+                It involves deep study of emotional expressions (Abhinaya) 
+                across various Bhabas and Rasas, complex classical items, 
+                Loka nrutya(folk dance) and dance-drama compositions.
               </div>
             </div>
           </div>
