@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="space-y-1.5 text-center font-sans tracking-wide text-stone-900">
           
           {/* Line 1: Copyright */}
-          <p className="whitespace-nowrap text-[17px] md:text-base">
+          <p className="whitespace-nowrap text-[16px] md:text-base">
             Copyright © 2026-{endYear}{" "}
             <Link 
               href="/" 
