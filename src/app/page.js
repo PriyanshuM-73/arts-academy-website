@@ -598,24 +598,24 @@ export default function Home() {
           </div>
         </div>
       </section>
-{/* Update the link above the "About the Institute" section */}
+
       <div className="flex justify-center mt-12 mb-16">
-  <Link 
-    href="/archives" 
-    prefetch={true} // <-- This triggers the background loading magic!
-    className="group inline-flex items-center gap-3 px-8 py-3.5 bg-amber-600 text-white rounded-full font-semibold shadow-lg shadow-amber-600/30 transition-all duration-300 hover:-translate-y-1 hover:bg-amber-500 hover:shadow-xl hover:shadow-amber-600/40 focus:outline-none focus:ring-2 focus:ring-amber-500"
-  >
-    {/* Clean, sharp Play Icon */}
-    <svg 
-      className="h-5 w-5 fill-current transition-transform duration-300 group-hover:scale-110" 
-      viewBox="0 0 24 24" 
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M8 5.14v14l11-7-11-7z" />
-    </svg>
-    Watch our Past Performances
-  </Link>
-</div>
+        <Link 
+          href="/archives" 
+          prefetch={true} 
+          className="group inline-flex items-center gap-3 px-8 py-3.5 bg-amber-600 text-white rounded-full font-semibold shadow-lg shadow-amber-600/30 transition-all duration-300 hover:-translate-y-1 hover:bg-amber-500 hover:shadow-xl hover:shadow-amber-600/40 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        >
+          <svg 
+            className="h-5 w-5 fill-current transition-transform duration-300 group-hover:scale-110" 
+            viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M8 5.14v14l11-7-11-7z" />
+          </svg>
+          Watch our Past Performances
+        </Link>
+      </div>
+
       {/* 5. ABOUT THE INSTITUTE & LOCATION */}
       <section id="about" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
