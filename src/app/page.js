@@ -7,19 +7,19 @@ import Image from "next/image";
 const announcements = [
   {
     id: 1,
-    dayMonth: "25 July",
+    dayMonth: "October",
     year: "2026",
-    title: "Rath Yatra Bhajan Sandhya",
-    description: "Watch our Institute students perform at Sector 3 Jagannath Mandir. Mandir.",
+    title: "Annual Fine-Arts Competition",
+    description: "Participate in our annual fine-arts competition and showcase your artistic talents. For students uptill class 10th. Date will be announced soon.",
     // link: "https://forms.gle/your-google-form-link-here",
     // linkText: "Register Here"
   },
   {
     id: 2,
-    dayMonth: "27 July",
+    dayMonth: "October",
     year: "2026",
-    title: "Rath Yatra Bhajan Sandhya",
-    description: "Watch our Institute students perform at Maa Mangala Mandir, Sector 2.",
+    title: "Odissi Music Workshop",
+    description: "Join us for an immersive workshop to learn more on Odissi music. Date will be announced soon.",
     // link: "https://forms.gle/your-google-form-link-here",
     // linkText: "Register Here"
   }
