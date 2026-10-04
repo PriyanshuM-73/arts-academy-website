@@ -7,19 +7,20 @@ import Image from "next/image";
 const announcements = [
   {
     id: 1,
-    dayMonth: "October",
+    dayMonth: "21-23 October",
     year: "2026",
-    title: "Annual Fine-Arts Competition",
-    description: "Participate in our annual fine-arts competition and showcase your artistic talents. For students uptill class 10th. Date will be announced soon.",
+    title: "Odissi Sangeet Workshop",
+    description: "Join us for an immersive odissi music workshop by Guru Sri Nimakanta Routray to learn more on Odissi music.  \nVenue: SSRVM, Sector 1, Rourkela. \n Time: 10 am to 1 pm and 5 pm to 7:30 pm.",
     // link: "https://forms.gle/your-google-form-link-here",
     // linkText: "Register Here"
   },
   {
     id: 2,
-    dayMonth: "October",
+    dayMonth: "24 October",
     year: "2026",
-    title: "Odissi Music Workshop",
-    description: "Join us for an immersive workshop to learn more on Odissi music. Date will be announced soon.",
+    title: "Hemanta Mohatsav (19th Annual Celebration)",
+    isFeatured: true,
+    description: " Witness the culmination of our students' talent at our annual function. Join us for an evening of music, dance, and celebration. \nVenue: Bhanja Bhawan Auditorium, Sector 19, Rourkela. \nTime: 9 am to 1 pm and 4 pm onwards.",
     // link: "https://forms.gle/your-google-form-link-here",
     // linkText: "Register Here"
   }
@@ -493,10 +494,14 @@ export default function Home() {
                   <div className="text-sm font-medium text-stone-500">{notice.year}</div>
                 </div>
                 <div>
-                  <h3 className="mb-1 text-lg font-bold text-stone-900">
+                  <h3 className={`mb-1 font-bold ${
+                    notice.isFeatured 
+                      ? "text-xl text-red-400" 
+                      : "text-lg text-stone-900"
+                    }`}>
                     {notice.title}
                   </h3>
-                  <p className="text-stone-600">
+                  <p className="text-stone-600 whitespace-pre-line">
                     {notice.description}
                   </p>
                   
